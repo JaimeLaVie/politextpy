@@ -1,4 +1,4 @@
-# preprocessing.py 中英文文本预处理 #Mingqi understands most of the languages, this is amazing!
+# preprocessing.py 中英文文本预处理
 import os
 import string
 from nltk.corpus import stopwords

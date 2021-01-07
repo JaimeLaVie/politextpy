@@ -1,4 +1,4 @@
-# tools.py 一些文本处理工具，包括词频统计等
+# tools.py 一些文本处理工具，包括词频统计、关键词提取等
 import os
 
 def words_frequency(inputfile, num):
@@ -43,6 +43,24 @@ def words_frequency(inputfile, num):
         words_to_return.append(combined[i][0])
 
     return words_to_return
+
+def key_word_extraction(text, target_path):
+    # Key word extraction, English only. 关键词提取，仅限英文
+    # target_path should contain .txt, that is, it shoule be "xxx/xxx.txt"
+    # if "OSError: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a shortcut link, a Python package or a valid path to a data directory.", 
+    # then in cmd: "python -m spacy download en_core_web_sm"
+    import spacy
+    import pytextrank
+
+    nlp = spacy.load("en_core_web_sm")
+    tr = pytextrank.TextRank()
+    nlp.add_pipe(tr.PipelineComponent, name = "textrank", last = True)
+    doc = nlp(text)
+
+    with open(target_path, "w") as f:
+        for p in doc._.phrases:
+            f.write("{:.4f} {:5d}  {}\n".format(p.rank, p.count, p.text))
+            f.write(p.chunks)
 
 if __name__ == "__main__":
     pass

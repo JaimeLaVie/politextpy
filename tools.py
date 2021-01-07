@@ -60,7 +60,7 @@ def key_word_extraction(text, target_path):
     with open(target_path, "w") as f:
         for p in doc._.phrases:
             f.write("{:.4f} {:5d}  {}\n".format(p.rank, p.count, p.text))
-            f.write(p.chunks)
+            f.write(str(p.chunks) + "\n")
 
 if __name__ == "__main__":
     pass

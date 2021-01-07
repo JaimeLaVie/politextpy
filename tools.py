@@ -1,4 +1,4 @@
-# tools.py 一些文本处理工具，包括词语计数等
+# tools.py 一些文本处理工具，包括词频统计等
 import os
 
 def words_frequency(inputfile, num):

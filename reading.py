@@ -1,4 +1,4 @@
-# reading.py 读入各类数据
+# reading.py 读入各类数据：Excel，Word，PDF（包括直接生成PDF的和PDF扫描件），JPG
 import pandas as pd
 import docx
 from pdfminer.high_level import extract_text

@@ -47,8 +47,7 @@ def words_frequency(inputfile, num):
 def key_word_extraction(text, target_path):
     # Key word extraction, English only. 关键词提取，仅限英文
     # target_path should contain .txt, that is, it shoule be "xxx/xxx.txt"
-    # if "OSError: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a shortcut link, a Python package or a valid path to a data directory.", 
-    # then in cmd: "python -m spacy download en_core_web_sm"
+    # if "OSError: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a shortcut link, a Python package or a valid path to a data directory.", then in cmd: "python -m spacy download en_core_web_sm". Or download en_core_web_sm-2.3.1.tar.gz from https://github.com/explosion/spacy-models/releases//tag/en_core_web_sm-2.3.1, and then cd to the folder of the downloaded file and execute "pip install en_core_web_sm-2.3.1.tar.gz".
     import spacy
     import pytextrank
 

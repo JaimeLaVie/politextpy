@@ -2,7 +2,9 @@
 
 ## Why is *Politextpy* Developed?
 
-We are overwhelmed by this era of overloading information, emerging misinformation and disinformation yet we are the same time empowered by it to embark on an unprecedented journey of research for international issues. We are exhilarated by the unexampled possibilities computational methods brought us to delineate the dynamics of domestic and international politics. Online public opinion initates our vision to build a novel field of work, *Computational Political Communication*. We hope to build up this vision brick by brick, and *Politextpy* is one of the bricks that is undoubtedly needed by not only our own research but for more demand from other researchers. With this package, we equip *Python* users to process English and Chinese language texts via **1) Preprocessing**, **2) Topic Models** and **3) Sentiment Analysis**.
+We are overwhelmed by this era of overloading information, emerging misinformation and disinformation yet we are the same time empowered by it to embark on an unprecedented journey of research for international issues. We are exhilarated by the unexampled possibilities computational methods brought us to delineate the dynamics of domestic and international politics. 
+
+Online public opinion initates our vision to build a novel field of work, *Computational Political Communication*. We hope to build up this vision brick by brick, and *Politextpy* is one of the bricks that is undoubtedly needed by not only our own research but for more demand from other researchers. With this package, we equip *Python* users to process English and Chinese language texts via **1) Preprocessing**, **2) Topic Models** and **3) Sentiment Analysis**.
 
 #### Online Public Opinion as A New Approach
 

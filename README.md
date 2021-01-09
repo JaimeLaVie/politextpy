@@ -19,4 +19,4 @@ Online public opinion initiates our vision to entrench a novel field of study, *
 + Arising Global Politics Issues: Interacting Geopolitics Dynamics, Major Powers Play, Aussenpolitik and Innenpolitik.
 
 
-This project inititated from a Tsinghua University Master Thesis, two IEEE conference submissions, three Starbucks meetings and numerous research questions urging for answers. And it will help more such assignments and aspiration of more people, in places we may have never been to, in ways we may have never imagined. Afterall that is the very starting point and destination of us as a developer, a researcher and an educator.
+This project inititated from a Tsinghua University Master Thesis, two IEEE conference submissions, three Starbucks meetings and numerous research questions urging for answers. And it will help more such assignments and aspiration of more people, in places we may have never been to, in ways we may have never imagined. Afterall that is the very starting point and destination of us as developer, researcher and educator.

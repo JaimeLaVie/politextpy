@@ -19,7 +19,7 @@ def delphrase(text, phrase):
 class preprocessing_zh():
     def __init__(self):
         ''' Constructor for this class. '''
-        # print('中文文本预处理，输入应当是每个元素均为句子的列表。预处理包括：1）分词，2）删除停用词和标点符号')
+        # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号')
         self.basic_path = Basic_Path
     
     def punctuations_zh(self):
@@ -42,8 +42,9 @@ class preprocessing_zh():
         return text
 
     def auto_prep(self, input):
-        # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是每个元素均为句子的列表。也可按需要单独执行以上各子程序。
+        # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
         output = []
+        input = input.split('。')   # 分句
         for sentence in input:
             sentence = self.seg(sentence)
             sentence = sentence.split()
@@ -55,7 +56,7 @@ class preprocessing_zh():
 class preprocessing_en():
     def __init__(self):
         ''' Constructor for this class. '''
-        # print('Perform pre-processing to English text. The input data should be a list, of which every member is a sentence. Pre-processing includes 1) to\
+        # print('Perform pre-processing to English text. The input data should be a str containing sentences. Pre-processing includes 1) to\
         #         lowercase, 2) delete stopwords and punctuations.')
         self.basic_path = Basic_Path
 
@@ -66,7 +67,7 @@ class preprocessing_en():
     def stopwords_en(self):
         # Return English stopwords in list format
         self.stopwords = []
-        stopwords_complementary = ['', 'would']
+        stopwords_complementary = ['', 'would', "'s"]
         with open (self.basic_path + "/stopwords_en.txt","r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
@@ -102,6 +103,7 @@ class preprocessing_en():
     def auto_prep(self, input):
         # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
         output = []
+        input = input.split('. ')  # change the str format sentences into a list of sentences.
         input = self.to_lower(input)
         for sentence in input:
             sentence = self.lemmatize_sentence(sentence)
@@ -111,3 +113,4 @@ class preprocessing_en():
             sentence = [word for word in sentence if word not in delete_words]
             output.append(sentence)
         return output
+

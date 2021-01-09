@@ -20,9 +20,9 @@ def lda_model(inputfile, num_topics, num_words):
 
 def lda_further(target_path, topics_words, doc, doc_split):
     # 本程序接lda_model()，保存各关键词和拥有每一类关键词最多的句子。target_path是保存路径，不只是保存的文件夹，需要写到文件名加“.txt”为止；
-    # topics_words就是lda_model()返回值中的topics_words；doc是分析的文本的原文的list（['', '', '']这样的）【最好是完全未经处理的（没变小
-    # 写、没去除停用词等），以便最后显示出来容易看懂】，用来保存在txt文档中，方便阅读；doc_split是doc处理后的版本，格式为[[], [], []]，同
-    # lda_model()的inputfile。
+    # topics_words就是lda_model()返回值中的topics_words；doc是分析的文本的原文的list（['', '', '']这样的，每个''都是一个句子）【最好是完
+    # 全未经处理的（没变小写、没去除停用词等），以便最后显示出来容易看懂】，用来保存在txt文档中，方便阅读；doc_split是doc处理后的版本，格式
+    # 为[[], [], []]，同lda_model()的inputfile。
     score = {}
     with open(target_path, 'w') as f:
         for topic in topics_words:

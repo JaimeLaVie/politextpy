@@ -6,5 +6,7 @@ We are overwhelmed by this era of overloading information, emerging misinformati
 
 #### Online Public Opinion as A New Approach
 
-Pivot in Objects: Elites and Policy-Making vs. Public and Policy-Perception; 
-Pivot to New Public Sphere: Crossing border/culture, Inter-formats, Weak-tie based;
++ Pivot in Objects: Elites and Policy-Making vs. Public and Policy-Perception; 
++ Pivot to New Public Sphere: Crossing border/culture, Inter-formats, Weak-tie based;
++ Pivot to Personalized Expression: Sentiments, “Free Market,” Niche and private clusters.
+

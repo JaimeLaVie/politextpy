@@ -20,3 +20,9 @@ Online public opinion initiates our vision to entrench a novel field of study, *
 
 
 This project initiated from a Tsinghua University master thesis, two *IEEE* conference submissions, three Starbucks meetings and numerous research questions urging for answers. And it will help more of such assignments and aspiration of more people, in places we may have never been to, in ways we may have never imagined, to solve puzzles we may have never encountered. Afterall that is the very starting point and destination of us as developer, researcher, practitioner and educator.
+
+## How does *Politextpy* function?
+
+*Politextpy* is a Python Package for the functions of **1) Preprocessing**, **2) Topic Models** and **3) Supervised/Unsupervised Sentiment Analysis**. It is aimed at first to process and analyze political texts, e.g., online posts and news outlets' texts about some certain agenda.
+
+

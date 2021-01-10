@@ -25,4 +25,11 @@ This project initiated from a Tsinghua University master thesis, two *IEEE* conf
 
 *Politextpy* is a Python Package for the functions of **1) Preprocessing**, **2) Topic Models** and **3) Supervised/Unsupervised Sentiment Analysis**. It is aimed at first to process and analyze political texts, e.g., online posts and news outlets' texts about some certain agenda.
 
-
+### Reading Files
+### Preprocessing
+##### English
+##### Chinese
+### Topic Models
+### Sentiment Analysis
+##### Unsupervised Sentiment Analysis
+##### Supervised Sentiment Analysis

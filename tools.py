@@ -1,5 +1,6 @@
-# tools.py 一些文本处理工具，包括词频统计、关键词提取等
+# tools.py 一些文本处理工具，包括词频统计、关键词提取、语言识别等
 import os
+import langid    # 需要经常反复执行的程序要用到的包在这里import，偶尔执行一次的程序在程序里import包
 
 def words_frequency(inputfile, num):
     # 获得词频。输入格式是[[], [], []]，list里的每个list都是已经分过词的句子；num是返回的最高频词的个数；返回值是一个高频词的list。
@@ -60,6 +61,12 @@ def key_word_extraction(text, target_path):
         for p in doc._.phrases:
             f.write("{:.4f} {:5d}  {}\n".format(p.rank, p.count, p.text))
             f.write(str(p.chunks) + "\n")
+
+def detect_lang(text):
+    # 语言分类代码见https://zh.wikipedia.org/wiki/ISO_639-1%E4%BB%A3%E7%A0%81%E8%A1%A8
+    # 或https://github.com/saffsd/langid.py
+    lang = str(langid.classify(text)[0])
+    return lang
 
 if __name__ == "__main__":
     pass

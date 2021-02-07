@@ -8,6 +8,7 @@ lemmatizer = WordNetLemmatizer()
 from nltk.corpus import wordnet
 from nltk import word_tokenize, pos_tag
 import thulac
+import re
 
 Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
 
@@ -23,7 +24,7 @@ class preprocessing_zh():
         self.basic_path = Basic_Path
     
     def punctuations_zh(self):
-        punc_zh = '，。；‘’“”？《》【】（）：、'
+        punc_zh = '，。；‘’“”？《》【】（）：、\"\''
         return list(punc_zh)
 
     def stopwords_zh(self):
@@ -44,13 +45,15 @@ class preprocessing_zh():
     def auto_prep(self, input):
         # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
         output = []
-        input = input.split('。')   # 分句
+        # input = input.split('。')   # 分句
+        input = re.split(r'[。？！]', input)  # 包含所有的句子结尾可能性
         for sentence in input:
-            sentence = self.seg(sentence)
-            sentence = sentence.split()
-            delete_words = self.punctuations_zh() + self.stopwords_zh()
-            sentence = [word for word in sentence if word not in delete_words]
-            output.append(sentence)
+            if sentence != '':
+                sentence = self.seg(sentence)
+                sentence = sentence.split()
+                delete_words = self.punctuations_zh() + self.stopwords_zh()
+                sentence = [word for word in sentence if word not in delete_words]
+                output.append(sentence)
         return output
 
 class preprocessing_en():
@@ -103,14 +106,16 @@ class preprocessing_en():
     def auto_prep(self, input):
         # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
         output = []
-        input = input.split('. ')  # change the str format sentences into a list of sentences.
+        # input = input.split('. ')  # change the str format sentences into a list of sentences.
+        input = re.split(r'[.?!]', input)  # To include all possible endings.
         input = self.to_lower(input)
         for sentence in input:
-            sentence = self.lemmatize_sentence(sentence)
-            # sentence = sentence.translate(str.maketrans('', '', string.punctuation))
-            # sentence = sentence.split()
-            delete_words = self.punctuations_en() + self.stopwords_en()
-            sentence = [word for word in sentence if word not in delete_words]
-            output.append(sentence)
+            if sentence != '':
+                sentence = self.lemmatize_sentence(sentence)
+                # sentence = sentence.translate(str.maketrans('', '', string.punctuation))
+                # sentence = sentence.split()
+                delete_words = self.punctuations_en() + self.stopwords_en()
+                sentence = [word for word in sentence if word not in delete_words]
+                output.append(sentence)
         return output
 

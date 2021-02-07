@@ -1,7 +1,19 @@
-# reading.py 读入各类数据：Excel，Word，PDF（包括直接生成PDF的和PDF扫描件），JPG
+# reading.py 读入各类数据：jsonl，Excel，Word，PDF（包括直接生成PDF的和PDF扫描件），JPG
+import jsonlines
 import pandas as pd
 import docx
 from pdfminer.high_level import extract_text
+
+def readjsonl(file_path, content = 'text'):
+    output = []
+    with open (file_path, "r") as f:
+        for line in jsonlines.Reader(f):
+            try:
+                output.append(line[content])
+            except:
+                pass
+    
+    return output
 
 def readExcel(file_path, sheet_name):
     # xlsx documents

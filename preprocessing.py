@@ -7,8 +7,10 @@ from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 from nltk.corpus import wordnet
 from nltk import word_tokenize, pos_tag
-import thulac
 import re
+import thulac
+thuseg = thulac.thulac(seg_only = True, filt = False)
+import jieba
 
 Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
 
@@ -35,10 +37,14 @@ class preprocessing_zh():
                 self.stopwords.append(lines.replace("\n", ""))
         return self.stopwords
 
-    def seg(self, text):
+    def seg(self, text, method = 'jieba'):
         # 中文分词
-        thuseg = thulac.thulac(seg_only=True, filt = False)
-        text = thuseg.cut(text, text=True)
+        if method == 'jieba':
+            text = " ".join(jieba.lcut(text))
+        elif method == 'thulac':
+            text = thuseg.cut(text, text=True)
+        else:
+            print('中文分词方法错误！ERROR in Chinese segmentation: Wrong method!')
         # print(text)
         return text
 

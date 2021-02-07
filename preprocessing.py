@@ -15,9 +15,15 @@ import jieba
 Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
 
 def delphrase(text, phrase):
+    # 删除指定语句
     for i in range (len(phrase)):
         text = text.replace(str(phrase[i]), '')
     return text
+
+def delurl(text):
+    # 识别并删除各种网址
+    url = re.findall(r'http[a-zA-Z0-9\.\?\/\&\=\:\^\%\$\#\!]*', text)
+    return delphrase(text, url)
 
 class preprocessing_zh():
     def __init__(self):
@@ -26,7 +32,7 @@ class preprocessing_zh():
         self.basic_path = Basic_Path
     
     def punctuations_zh(self):
-        punc_zh = '，。；‘’“”？《》【】（）：、\"\''
+        punc_zh = '，。；‘’“”？《》【】（）：、\"\'#'
         return list(punc_zh)
 
     def stopwords_zh(self):
@@ -50,9 +56,10 @@ class preprocessing_zh():
 
     def auto_prep(self, input):
         # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
+        input = delurl(input)
         output = []
         # input = input.split('。')   # 分句
-        input = re.split(r'[。？！]', input)  # 包含所有的句子结尾可能性
+        input = re.split(r'[。？！\n]', input)  # 包含所有的句子结尾可能性
         for sentence in input:
             if sentence != '':
                 sentence = self.seg(sentence)
@@ -111,9 +118,10 @@ class preprocessing_en():
 
     def auto_prep(self, input):
         # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
+        input = delurl(input)
         output = []
         # input = input.split('. ')  # change the str format sentences into a list of sentences.
-        input = re.split(r'[.?!]', input)  # To include all possible endings.
+        input = re.split(r'[.?!\n]', input)  # To include all possible endings.
         input = self.to_lower(input)
         for sentence in input:
             if sentence != '':

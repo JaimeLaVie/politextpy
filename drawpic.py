@@ -1,4 +1,7 @@
 # drawpic.py 画图
+# -*- coding: utf-8 -*-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 def plotbar(self, types, values, picname, top_k = 10, title = ""):
@@ -97,6 +100,22 @@ def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsi
     plt.legend()
     plt.savefig(file_target + "/{}.jpg".format(picname))
     plt.clf()
+
+def draw3dpic(x, y, z, save_path, x_label = 'x', y_label = 'y', z_label = 'z'):
+    """ 
+    绘制三维散点图，x、y、z分别是散点的三个坐标的dataframe。本程序来源于D:\GitHub\draw3dpic\draw_pic.py，dataframe读自Excel，来源如下：
+    data_frame = pd.read_excel('LCOE_data_1.xlsx',sheet_name='Sheet1')
+    x = data_frame['Net Capacity Factor']
+    y = data_frame['Generation Equipment']
+    z = data_frame['LCOE'] 
+    """
+    ax = plt.subplot(111, projection='3d')
+    ax.scatter(x, y, z, c='y')
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.set_zlabel(z_label)
+    # ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+    plt.savefig(save_path)   # 例如'lcoe_pic_1.jpg'
 
 def drawwordcloud(text, file_target):
     # 绘制词云，text是以空格分开各个单词的str，也就是已经经过预处理（去除停用词和标点符号、已经英文词形还原或中文分词）的原始文本

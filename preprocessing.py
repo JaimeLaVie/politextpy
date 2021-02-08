@@ -28,7 +28,7 @@ def delurl(text):
 class preprocessing_zh():
     def __init__(self):
         ''' Constructor for this class. '''
-        # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号')
+        # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇以供删除不相关推文。')
         self.basic_path = Basic_Path
     
     def punctuations_zh(self):
@@ -42,6 +42,10 @@ class preprocessing_zh():
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
         return self.stopwords
+
+    def twitter_dirty_words_zh(self):
+        dirty_words = ['约炮', '约 炮', '约pa', '爆乳', '情趣', '迷奸', '内射', '吞精', '吞 精', '补肾', '偷情', '强奸', '捉奸', '轮奸', '献妻', '白翘', '宠幸', '屁眼', 'AV素人', '厕拍', '肥臀', '淫水', '啪啪', '女优', '女 优', '增大增粗', '潮吹', '潮 吹', '吃屌', '吃 屌', '裸照', '裸聊', '舔秃', '名器', 'porn']
+        return dirty_words
 
     def seg(self, text, method = 'jieba'):
         # 中文分词

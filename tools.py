@@ -1,4 +1,4 @@
-# tools.py 一些文本处理工具，包括词频统计、关键词提取、语言识别等
+# tools.py 一些文本处理工具，包括词频统计、关键词提取、语言识别、TSNE降维及画图等
 import os
 import langid    # 需要经常反复执行的程序要用到的包在这里import，偶尔执行一次的程序在程序里import包
 
@@ -67,6 +67,51 @@ def detect_lang(text):
     # 或https://github.com/saffsd/langid.py
     lang = str(langid.classify(text)[0])
     return lang
+
+def tsne_value(tokens):
+    from sklearn.manifold import TSNE
+    tsne_model = TSNE(perplexity=40, n_components=2, init='pca', n_iter=2500, random_state=23)
+    new_values = tsne_model.fit_transform(tokens)
+    x = []
+    y = []
+    for value in new_values:
+        x.append(value[0])
+        y.append(value[1])
+
+    return x, y
+
+def tsne_plot(model, chosen_words, picname):
+    "Creates and TSNE model and plots it"
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    
+    print("Start drawing " + picname + "...")
+    labels = []
+    tokens = []
+
+    for word in model.wv.vocab:
+        tokens.append(model[word])
+        labels.append(word)
+
+    x, y = tsne_value(tokens)
+
+    plt.figure(figsize=(16, 16))
+    print('len(x) = ', len(x))
+    for i in range(len(x)):
+        if labels[i] in chosen_words:
+            dot1 = plt.scatter(x[i], y[i], s=40, c='b', marker='o', edgecolors='none')
+            plt.annotate(labels[i],
+                         # fontproperties=font,
+                         xy=(x[i], y[i]),
+                         xytext=(5, 2),
+                         fontsize='xx-large',
+                         textcoords='offset points',
+                         color='b',
+                         ha='right',
+                         va='bottom')
+    plt.savefig(file_save + '{}.png'.format(picname))
+    plt.clf()
 
 if __name__ == "__main__":
     pass

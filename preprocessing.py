@@ -1,5 +1,7 @@
 # preprocessing.py 中英文文本预处理
 import os
+import re
+import sys
 import string
 from nltk.corpus import stopwords
 stop_words_en = stopwords.words('english')
@@ -7,10 +9,11 @@ from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 from nltk.corpus import wordnet
 from nltk import word_tokenize, pos_tag
-import re
 import thulac
 thuseg = thulac.thulac(seg_only = True, filt = False)
 import jieba
+import MeCab    #日语分词
+mecab_tagger = MeCab.Tagger("-Owakati")
 
 Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
 
@@ -31,16 +34,22 @@ class preprocessing_zh():
         # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇以供删除不相关推文。')
         self.basic_path = Basic_Path
     
-    def punctuations_zh(self):
-        punc_zh = '，。；‘’“”？《》【】（）：、\"\'#'
-        return list(punc_zh)
+    def punctuations_zh(self, add_punc = ''):
+        punc_zh = '，。；‘’“”？《》【】（）：、\"\'#・「」' + add_punc
+        return punc_zh, list(punc_zh)
 
-    def stopwords_zh(self):
+    def stopwords_zh(self, add_word = []):
         # 返回列表格式的中文停用词
+        try:
+            assert isinstance(add_word, list)
+        except:
+            print("ERROR! add_word must be a list!")
+            sys.exit(0)
         self.stopwords = []
-        with open (self.basic_path + "/stopwords_zh.txt","r", encoding = 'UTF-8') as f:
+        with open (self.basic_path + "/stopwords/stopwords_zh.txt","r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
+        self.stopwords += add_word
         return self.stopwords
 
     def twitter_dirty_words_zh(self):
@@ -55,10 +64,11 @@ class preprocessing_zh():
             text = thuseg.cut(text, text=True)
         else:
             print('中文分词方法错误！ERROR in Chinese segmentation: Wrong method!')
+            sys.exit(0)
         # print(text)
         return text
 
-    def auto_prep(self, input):
+    def auto_prep(self, input, seg_method = 'jieba', add_punc = '', add_word = []):
         # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
         input = delurl(input)
         output = []
@@ -66,10 +76,17 @@ class preprocessing_zh():
         input = re.split(r'[。？！\n]', input)  # 包含所有的句子结尾可能性
         for sentence in input:
             if sentence != '':
-                sentence = self.seg(sentence)
+                sentence = self.seg(sentence, method = seg_method)
                 sentence = sentence.split()
-                delete_words = self.punctuations_zh() + self.stopwords_zh()
-                sentence = [word for word in sentence if word not in delete_words]
+                # if add_punc != '':      # 为防止新加的标点符号在分词过程中未与词分开来，而是仍然连着，使得后续无法删除。停用词是完整的词整体删除，故没有标点这样的问题。
+                punc, punc_list = self.punctuations_zh(add_punc)
+                punc_all = '[' + punc + ']'    # 中括号是为了后面re.split准备的，必须要有才能准确删除中括号里的标点符号。
+                sentence_new = []
+                for word in sentence:
+                    sentence_new = sentence_new + re.split(punc_all, word)
+                sentence = [word for word in sentence_new if word != '']
+                # delete_words = self.stopwords_zh(add_word)
+                sentence = [word for word in sentence if word not in self.stopwords_zh(add_word)]
                 output.append(sentence)
         return output
 
@@ -80,18 +97,24 @@ class preprocessing_en():
         #         lowercase, 2) delete stopwords and punctuations.')
         self.basic_path = Basic_Path
 
-    def punctuations_en(self):
-        punc_en = string.punctuation
-        return list(punc_en)
+    def punctuations_en(self, add_punc = ''):
+        punc_en = string.punctuation + add_punc
+        return punc_en, list(punc_en)
 
-    def stopwords_en(self):
+    def stopwords_en(self, add_word = []):
         # Return English stopwords in list format
+        try:
+            assert isinstance(add_word, list)
+        except:
+            print("ERROR! add_word must be a list!")
+            sys.exit(0)
         self.stopwords = []
         stopwords_complementary = ['', 'would', "'s"]
-        with open (self.basic_path + "/stopwords_en.txt","r", encoding = 'UTF-8') as f:
+        with open (self.basic_path + "/stopwords/stopwords_en.txt","r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
-        self.stopwords = self.stopwords + stop_words_en + stopwords_complementary
+        self.stopwords = self.stopwords + stop_words_en + stopwords_complementary + add_word
+        self.stopwords = [word.lower() for word in self.stopwords]
         return self.stopwords
 
     def to_lower(self, text):
@@ -120,7 +143,7 @@ class preprocessing_en():
             lemmatized_output.append(lemmatizer.lemmatize(word, pos=wordnet_pos))
         return lemmatized_output
 
-    def auto_prep(self, input):
+    def auto_prep(self, input, add_punc = '', add_word = []):
         # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
         input = delurl(input)
         output = []
@@ -132,8 +155,113 @@ class preprocessing_en():
                 sentence = self.lemmatize_sentence(sentence)
                 # sentence = sentence.translate(str.maketrans('', '', string.punctuation))
                 # sentence = sentence.split()
-                delete_words = self.punctuations_en() + self.stopwords_en()
-                sentence = [word for word in sentence if word not in delete_words]
+                # if add_punc != '':    # Seperate added punctuations and the word it follows, or it will not be successfully deleted in the following step.
+                punc, punc_list = self.punctuations_en(add_punc)
+                punc_all = '[' + punc + ']'   # '[]' is necessary for re.split, only punctuations in '[]' can be successfully deleted.
+                sentence_new = []
+                for word in sentence:
+                    sentence_new = sentence_new + re.split(punc_all, word)
+                sentence = [word for word in sentence_new if word != '']
+                # delete_words = self.punctuations_en(add_punc) + self.stopwords_en(add_word)
+                sentence = [word for word in sentence if word not in self.stopwords_en(add_word)]
                 output.append(sentence)
         return output
 
+class preprocessing_ja():
+    def __init__(self):
+        ''' Constructor for this class. '''
+        # print('日语文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇以供删除不相关推文。')
+        self.basic_path = Basic_Path
+    
+    def punctuations_ja(self, add_punc = ''):
+        punc_ja = '，。；‘’“”？《》【】（）：、\"\'#・「」\[\]' + add_punc
+        return punc_ja, list(punc_ja)
+
+    def stopwords_ja(self, add_word = []):
+        # 返回列表格式的日语停用词
+        try:
+            assert isinstance(add_word, list)
+        except:
+            print("ERROR! add_word must be a list!")
+            sys.exit(0)
+        self.stopwords = []
+        with open (self.basic_path + "/stopwords/stopwords_ja.txt","r", encoding = 'UTF-8') as f:
+            for lines in f:
+                self.stopwords.append(lines.replace("\n", ""))
+        self.stopwords += add_word
+        return self.stopwords
+
+    def seg(self, text):
+        # 日语分词
+        text = mecab_tagger.parse(text)
+        return text
+
+    def auto_prep(self, input, add_punc = '', add_word = []):
+        # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
+        input = delurl(input)
+        output = []
+        # input = input.split('。')   # 分句
+        input = re.split(r'[。？！\n]', input)  # 包含所有的句子结尾可能性
+        for sentence in input:
+            if sentence != '':
+                sentence = self.seg(sentence)
+                sentence = sentence.split()
+                # if add_punc != '':      # 为防止新加的标点符号在分词过程中未与词分开来，而是仍然连着，使得后续无法删除。停用词是完整的词整体删除，故没有标点这样的问题。
+                punc, punc_list = self.punctuations_ja(add_punc)
+                punc_all = '[' + punc + ']'    # 中括号是为了后面re.split准备的，必须要有才能准确删除中括号里的标点符号。
+                sentence_new = []
+                for word in sentence:
+                    sentence_new = sentence_new + re.split(punc_all, word)
+                sentence = [word for word in sentence_new if word != '']
+                # delete_words = self.punctuations_ja(add_punc) + self.stopwords_ja(add_word)
+                sentence = [word for word in sentence if word not in self.stopwords_ja(add_word)]
+                output.append(sentence)
+        return output
+
+class preprocessing_ko():
+    def __init__(self):
+        ''' Constructor for this class. '''
+        # print('Perform pre-processing to English text. The input data should be a str containing sentences. Pre-processing includes 1) to\
+        #         lowercase, 2) delete stopwords and punctuations.')
+        self.basic_path = Basic_Path
+
+    def punctuations_ko(self, add_punc = ''):
+        punc_ko = string.punctuation + add_punc
+        return punc_ko, list(punc_ko)
+
+    def stopwords_ko(self, add_word = []):
+        # 返回列表格式的朝鲜语停用词
+        try:
+            assert isinstance(add_word, list)
+        except:
+            print("ERROR! add_word must be a list!")
+            sys.exit(0)
+        self.stopwords = []
+        with open (self.basic_path + "/stopwords/stopwords_ko.txt","r", encoding = 'UTF-8') as f:
+            for lines in f:
+                self.stopwords.append(lines.replace("\n", ""))
+        self.stopwords += add_word
+        return self.stopwords
+
+    def auto_prep(self, input, add_punc = '', add_word = []):
+        # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
+        input = delurl(input)
+        output = []
+        # input = input.split('. ')  # change the str format sentences into a list of sentences.
+        input = re.split(r'[.?!\n]', input)  # To include all possible endings.
+        for sentence in input:
+            if sentence != '':
+                sentence = sentence.split()
+                # sentence = sentence.translate(str.maketrans('', '', string.punctuation))
+                # sentence = sentence.split()
+                # if add_punc != '':    # Seperate added punctuations and the word it follows, or it will not be successfully deleted in the following step.
+                punc, punc_list = self.punctuations_ko(add_punc)
+                punc_all = '[' + punc + ']'   # 中括号是为了后面re.split准备的，必须要有才能准确删除中括号里的标点符号。
+                sentence_new = []
+                for word in sentence:
+                    sentence_new = sentence_new + re.split(punc_all, word)
+                sentence = [word for word in sentence_new if word != '']
+                # delete_words = self.punctuations_ko(add_punc) + self.stopwords_ko(add_word)
+                sentence = [word for word in sentence if word not in self.stopwords_ko(add_word)]
+                output.append(sentence)
+        return output

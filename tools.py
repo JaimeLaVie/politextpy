@@ -80,7 +80,7 @@ def tsne_value(tokens):
 
     return x, y
 
-def tsne_plot(model, chosen_words, picname):
+def tsne_plot(model, chosen_words, save_path, picname):
     "Creates and TSNE model and plots it"
     import matplotlib
     matplotlib.use('Agg')
@@ -110,7 +110,7 @@ def tsne_plot(model, chosen_words, picname):
                          color='b',
                          ha='right',
                          va='bottom')
-    plt.savefig(file_save + '{}.png'.format(picname))
+    plt.savefig(save_path + '{}.png'.format(picname))
     plt.clf()
 
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ def readPDF(file_path):
     output = extract_text(file_path)
     return output
 
-def pdf2img(PDF_file, first_page=1, last_page=1, dpi=500):
+def pdf2img(PDF_file, target_folder, first_page=1, last_page=1, dpi=500):
     # Convert pdf to jpg files, this is for reading scanned PDF files whilch cannot be processed by readPDF(). Scanned PDF files should first 
     # be converted into jpg files, and then be processed by readJPG(). See sample codes below:
     """ 
@@ -53,6 +53,8 @@ def pdf2img(PDF_file, first_page=1, last_page=1, dpi=500):
         file_paths.append(target_folder + '\\' + "page_" + str(i) + ".jpg")
     recognizer(file_paths, target_folder) 
     """
+
+    from pdf2image import convert_from_path
 
     print("Converting the PDF file to images (.jpg)...")
     pages = convert_from_path(PDF_file, dpi, first_page=first_page, last_page=last_page)
@@ -84,6 +86,10 @@ def readJPG(file_paths, target_folder):
     # file_paths should be a list of paths of the jpg images, and the order of the jpg files is the same as they appear in the output txt file.
     # This function can be used independently to extract texts in jpg files, or it can also work together with pdf2img() to recognize texts 
     # in scanned PDF files. See sample codes above (in pdf2img()).
+    
+    from PIL import Image
+    import pytesseract
+    # pytesseract.pytesseract.tesseract_cmd = "C:\\Users\\consultant.yekai.xu\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
 
     print("Recognizing texts in the images...")
 

@@ -1,6 +1,6 @@
 # country_code.py 将文本中的各种国家的各种称谓统一
 
-# 以下国家编码参照ISO_3166-1标准，见https://zh.wikipedia.org/wiki/ISO_3166-1
+# 以下国家编码参照ISO 3166-1标准，见https://zh.wikipedia.org/wiki/ISO_3166-1
 # 包含：世界主要国家（联合国常任理事国、G7、G20、OECD国家）+与中国关系密切国家（上合组织成员国（含观察员）、东盟成员国、朝鲜）。
 
 """ 完整版词典
@@ -74,9 +74,9 @@ dictionary = {
     # 中文国家名词典
     'dictionary_zh': {
         '中国': 'cn', '中國': 'cn', '中华人民共和国': 'cn', '中華人民共和國': 'cn', '中華人民共和国': 'cn',
-        '日本':'jp',
+        '日本国':'jp', '日本國':'jp', '日本':'jp',                            # 包含短名称的长名称在前，优先识别，避免出现"countrynamejp国"的情况
         '韩国': 'kr', '韓國': 'kr', '韓国': 'kr', '大韩民国': 'kr', '大韓民國': 'kr', '大韓民国': 'kr',
-        '朝鲜': 'kp', '朝鮮': 'kp', '北韩': 'kp',
+        '朝鲜民主主义人民共和国': 'kp', '朝鲜': 'kp', '朝鮮民主主義人民共和國': 'kp', '朝鮮': 'kp', '北韩': 'kp',
         '印度尼西亚': 'id', '印度尼西亞': 'id', '印尼': 'id',
         '马来西亚': 'my', '馬來西亞': 'my',
         '菲律宾': 'pl', '菲律賓': 'pl',
@@ -140,10 +140,10 @@ dictionary = {
     },
     # 英文国家名词典
     'dictionary_en': {
-        'China': 'cn', 'the PRC': 'cn', 'P.R.C.': 'cn',
+        "People's Republic of China": 'cn', 'China': 'cn', 'the PRC': 'cn', 'P.R.C.': 'cn',#长名称在前优先识别，避免出现"People's Republic of countrynamecn"的情况
         'Japan':'jp',
-        'SouthKorea': 'kr', 'South Korea': 'kr', 'Republic of Korea': 'kr', 'R.O. Korea': 'kr', 'R.O.K.': 'kr', 'the ROK': 'kr',
-        'NorthKorea': 'kp', 'North Korea': 'kp', 'DPR Korea': 'kp', 'D.P.R. Korea': 'kp', 'D.P.R.K.': 'kp', 'the DPRK': 'kp', "Democratic People's Republic of Korea": 'kp',
+        'Republic of Korea': 'kr', 'SouthKorea': 'kr', 'South Korea': 'kr', 'R.O. Korea': 'kr', 'R.O.K.': 'kr', 'the ROK': 'kr',
+        "Democratic People's Republic of Korea": 'kp', 'NorthKorea': 'kp', 'North Korea': 'kp', 'DPR Korea': 'kp', 'D.P.R. Korea': 'kp', 'D.P.R.K.': 'kp', 'the DPRK': 'kp',
         'Indonesia': 'id', 
         'Malaysia': 'my', 
         'Philippines': 'pl',
@@ -208,9 +208,9 @@ dictionary = {
     # 日语国家名词典
     'dictionary_ja': {
         '中国': 'cn', '中華人民共和国': 'cn',
-        '日本':'jp',
+        '日本国':'jp', '日本':'jp',
         '韓国': 'kr', '大韓民国': 'kr',
-        '朝鮮': 'kp',
+        '朝鮮民主主義人民共和国': 'kp', '朝鮮': 'kp',
         'モンゴル': 'mn'
     },
     # 朝鲜语国家名词典
@@ -218,7 +218,7 @@ dictionary = {
         '중국': 'cn', '중화 인민 공화국': 'cn',
         '일본':'jp',
         '대한민국': 'kr', '한국': 'kr',
-        '조선': 'kp', '북한': 'kp'
+        '조선민주주의인민공화국': 'kp', '조선': 'kp', '북한': 'kp'
     }
 }
 

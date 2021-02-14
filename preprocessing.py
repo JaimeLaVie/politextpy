@@ -5,13 +5,11 @@ import sys
 import string
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-lemmatizer = WordNetLemmatizer()
 from nltk.corpus import wordnet
 from nltk import word_tokenize, pos_tag
 import thulac
 import jieba
 import MeCab    #日语分词
-mecab_tagger = MeCab.Tagger("-Owakati")
 
 Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
 
@@ -96,6 +94,7 @@ class preprocessing_en():
         # print('Perform pre-processing to English text. The input data should be a str containing sentences. Pre-processing includes 1) to\
         #         lowercase, 2) delete stopwords and punctuations.')
         self.basic_path = Basic_Path
+        self.lemmatizer = WordNetLemmatizer()
         self.stop_words_en = stopwords.words('english')
         self.stopwords_complementary = ['', 'would', "'s"]
         self.stopwords_txt = []
@@ -143,7 +142,7 @@ class preprocessing_en():
         lemmatized_output = []
         for word, pos in pos_tag(word_tokenize(sentence)):
             wordnet_pos = self.get_wordnet_pos(pos) or wordnet.NOUN
-            lemmatized_output.append(lemmatizer.lemmatize(word, pos=wordnet_pos))
+            lemmatized_output.append(self.lemmatizer.lemmatize(word, pos=wordnet_pos))
         return lemmatized_output
 
     def auto_prep(self, input, add_punc = '', add_word = []):
@@ -175,6 +174,7 @@ class preprocessing_ja():
         ''' Constructor for this class. '''
         # print('日语文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇以供删除不相关推文。')
         self.basic_path = Basic_Path
+        self.mecab_tagger = MeCab.Tagger("-Owakati")
         self.stopwords = []
         with open (self.basic_path + "/stopwords/stopwords_ja.txt","r", encoding = 'UTF-8') as f:
             for lines in f:
@@ -196,7 +196,7 @@ class preprocessing_ja():
 
     def seg(self, text):
         # 日语分词
-        text = mecab_tagger.parse(text)
+        text = self.mecab_tagger.parse(text)
         return text
 
     def auto_prep(self, input, add_punc = '', add_word = []):

@@ -1,4 +1,4 @@
-# drawpic.py 画图
+# visualization.py 画图
 # -*- coding: utf-8 -*-
 import matplotlib
 matplotlib.use('Agg')

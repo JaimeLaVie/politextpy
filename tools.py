@@ -81,7 +81,11 @@ def tsne_value(tokens):
     return x, y
 
 def tsne_plot(model, chosen_words, save_path, picname):
-    "Creates and TSNE model and plots it"
+    """ 
+    Creates and TSNE model and plots it
+    chsen_words should be like this {'b': ['happy', 'unhappy', 'sad', 'glad'], 'r': ['fear', 'fearless'], 'c': ['angry', 'pleased', 'pleasant']}
+    'b', 'r', and 'c' are the color for the chosen words. Each color represent a category. Colors can be: 'b', 'r', 'c', 'g', 'k', 'm', 'w', and 'y'.
+    """
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -89,10 +93,16 @@ def tsne_plot(model, chosen_words, save_path, picname):
     print("Start drawing " + picname + "...")
     labels = []
     tokens = []
+    chosen_words_transformed = {}
 
+    for item in chosen_words:
+        for word in chosen_words[item]:
+            chosen_words_transformed[word] = item
     for word in model.wv.vocab:
         tokens.append(model[word])
         labels.append(word)
+    
+    print("Start TSNE...")
 
     x, y = tsne_value(tokens)
 
@@ -100,17 +110,17 @@ def tsne_plot(model, chosen_words, save_path, picname):
     print('len(x) = ', len(x))
     for i in range(len(x)):
         if labels[i] in chosen_words:
-            dot1 = plt.scatter(x[i], y[i], s=40, c='b', marker='o', edgecolors='none')
+            plt.scatter(x[i], y[i], s=40, c=chosen_words_transformed[labels[i]], marker='o', edgecolors='none')
             plt.annotate(labels[i],
-                         # fontproperties=font,
-                         xy=(x[i], y[i]),
-                         xytext=(5, 2),
-                         fontsize='xx-large',
-                         textcoords='offset points',
-                         color='b',
-                         ha='right',
-                         va='bottom')
-    plt.savefig(save_path + '{}.png'.format(picname))
+                        # fontproperties=font,
+                        xy=(x[i], y[i]),
+                        xytext=(5, 2),
+                        fontsize='xx-large',
+                        textcoords='offset points',
+                        color=chosen_words_transformed[labels[i]],
+                        ha='right',
+                        va='bottom')
+    plt.savefig(os.path.join(save_path, '{}.png'.format(picname)))
     plt.clf()
 
 if __name__ == "__main__":

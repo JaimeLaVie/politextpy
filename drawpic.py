@@ -46,30 +46,30 @@ def plotbar(self, types, values, picname, top_k = 10, title = ""):
     #plt.show()
     plt.savefig("./{}.tiff".format(picname), format='tiff')
 
-def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
+def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
     # 绘制折线图
-    y = []
-    for t in h:
-        y.append(float(record[t]))
-    lenh = range(len(h))
-    # print ('h = ', h)
-    # print ('y = ', y)
-    plt.figure(figsize = picsize)
-    plt.plot(lenh, y, linewidth = 3, color = 'blue')
-    plt.xticks(lenh, h, rotation = 45)
-    plt.tick_params(axis='x', labelsize = 16)
-    plt.tick_params(axis='y', labelsize = 25)
-    plt.ylim(Ylim)
-    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 40}
-    plt.xlabel(xname, font_x)
-    plt.ylabel(yname, font_y)
-    plt.title(picname, font_title)
-    # for a, b in zip(lenh, y):
-    #     plt.text(a, b, b, ha='center', va='bottom', fontsize=20)
-    plt.savefig(file_target + "/{}.jpg".format(picname))
-    plt.clf()
+    y = []
+    for t in h:
+        y.append(float(record[t]))
+    lenh = range(len(h))
+    # print ('h = ', h)
+    # print ('y = ', y)
+    plt.figure(figsize = picsize)
+    plt.plot(lenh, y, linewidth = 3, color = 'blue')
+    plt.xticks(lenh, h, rotation = 45)
+    plt.tick_params(axis='x', labelsize = 16)
+    plt.tick_params(axis='y', labelsize = 25)
+    plt.ylim(Ylim)
+    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
+    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
+    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 40}
+    plt.xlabel(xname, font_x)
+    plt.ylabel(yname, font_y)
+    plt.title(picname, font_title)
+    # for a, b in zip(lenh, y):
+    #     plt.text(a, b, b, ha='center', va='bottom', fontsize=20)
+    plt.savefig(file_target + "/{}.jpg".format(picname))
+    plt.clf()
 
 def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsize, file_target):
     # 绘制包含三条曲线的折线图

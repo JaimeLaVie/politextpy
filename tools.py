@@ -109,7 +109,7 @@ def tsne_plot(model, chosen_words, save_path, picname):
     plt.figure(figsize=(16, 16))
     print('len(x) = ', len(x))
     for i in range(len(x)):
-        if labels[i] in chosen_words:
+        if labels[i] in chosen_words_transformed:
             plt.scatter(x[i], y[i], s=40, c=chosen_words_transformed[labels[i]], marker='o', edgecolors='none')
             plt.annotate(labels[i],
                         # fontproperties=font,

@@ -31,7 +31,7 @@ class preprocessing_zh():
         self.basic_path = Basic_Path
         self.thuseg = thulac.thulac(seg_only = True, filt = False)
         self.stopwords = []
-        with open (self.basic_path + "/stopwords/stopwords_zh.txt","r", encoding = 'UTF-8') as f:
+        with open (os.path.join(self.basic_path, "stopwords", "stopwords_zh.txt"),"r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
     
@@ -98,7 +98,7 @@ class preprocessing_en():
         self.stop_words_en = stopwords.words('english')
         self.stopwords_complementary = ['', 'would', "'s"]
         self.stopwords_txt = []
-        with open (self.basic_path + "/stopwords/stopwords_en.txt","r", encoding = 'UTF-8') as f:
+        with open (os.path.join(self.basic_path, "stopwords", "stopwords_en.txt"),"r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords_txt.append(lines.replace("\n", ""))
         self.stopwords = self.stopwords_txt + self.stop_words_en + self.stopwords_complementary
@@ -176,7 +176,7 @@ class preprocessing_ja():
         self.basic_path = Basic_Path
         self.mecab_tagger = MeCab.Tagger("-Owakati")
         self.stopwords = []
-        with open (self.basic_path + "/stopwords/stopwords_ja.txt","r", encoding = 'UTF-8') as f:
+        with open (os.path.join(self.basic_path, "stopwords", "stopwords_ja.txt"),"r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
     
@@ -228,7 +228,7 @@ class preprocessing_ko():
         #         lowercase, 2) delete stopwords and punctuations.')
         self.basic_path = Basic_Path
         self.stopwords = []
-        with open (self.basic_path + "/stopwords/stopwords_ko.txt","r", encoding = 'UTF-8') as f:
+        with open (os.path.join(self.basic_path, "stopwords", "stopwords_ko.txt"),"r", encoding = 'UTF-8') as f:
             for lines in f:
                 self.stopwords.append(lines.replace("\n", ""))
 

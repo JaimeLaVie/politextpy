@@ -1,6 +1,7 @@
 # tools.py 一些文本处理工具，包括词频统计、关键词提取、语言识别、TSNE降维及画图等
 import os
 import langid    # 需要经常反复执行的程序要用到的包在这里import，偶尔执行一次的程序在程序里import包
+import numpy as np
 
 def words_frequency(inputfile, num):
     # 获得词频。输入格式是[[], [], []]，list里的每个list都是已经分过词的句子；num是返回的最高频词的个数；返回值是一个高频词的list。
@@ -122,6 +123,27 @@ def tsne_plot(model, chosen_words, save_path, picname):
                         va='bottom')
     plt.savefig(os.path.join(save_path, '{}.png'.format(picname)))
     plt.clf()
+
+def similarity(model, word1, word2):
+    # 返回相似度，此处相似度定义是余弦相似度（即gensim内置的相似度）加一（否则出现负数会改变整个值的方向）再除以两个词向量的欧氏距离（向量之差的模）
+    # model是gensim中word2vec模型保存的文件，读取例如：model = word2vec.Word2Vec.load(model_path)
+    sim = (model.wv.similarity(word1, word2) + 1)/np.linalg.norm(model[word1]-model[word2])
+    assert sim > 0
+    return sim
+
+def diameter(model):
+    tokens = []
+    for word in model.wv.vocab:
+        tokens.append(model[word])
+    
+    longest = []
+    for i in range(len(tokens) - 1):
+        longest_word = []
+        for j in range(i+1, len(tokens)):
+            longest_word.append(np.linalg.norm(tokens[i]-tokens[j]))
+        longest.append(max(longest_word))
+    
+    return max(longest)
 
 if __name__ == "__main__":
     pass

@@ -124,6 +124,24 @@ class preprocessing_en():
         text = [sentences.lower() for sentences in text]
         return text
 
+    def decontracted(self, text): 
+        # specific
+        text = re.sub(r"won\'t", "will not", text)
+        text = re.sub(r"can\'t", "can not", text)
+        text = re.sub(r"@", "" , text)         # removal of @
+        text =  re.sub(r"http\S+", "", text)   # removal of URLs
+        text = re.sub(r"#", "", text)          # hashtag processing
+        # general
+        text = re.sub(r"n\'t", " not", text)
+        text = re.sub(r"\'re", " are", text)
+        text = re.sub(r"\'s", " is", text)
+        text = re.sub(r"\'d", " would", text)
+        text = re.sub(r"\'ll", " will", text)
+        text = re.sub(r"\'t", " not", text)
+        text = re.sub(r"\'ve", " have", text)
+        text = re.sub(r"\'m", " am", text)
+        return text
+
     def get_wordnet_pos(self, treebank_tag):
         # 判别词性
         if treebank_tag.startswith('J'):
@@ -154,6 +172,7 @@ class preprocessing_en():
         input = self.to_lower(input)
         for sentence in input:
             if sentence != '':
+                sentence = self.decontracted(sentence)
                 sentence = self.lemmatize_sentence(sentence)
                 # sentence = sentence.translate(str.maketrans('', '', string.punctuation))
                 # sentence = sentence.split()

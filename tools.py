@@ -145,5 +145,12 @@ def diameter(model):
     
     return max(longest)
 
+def list2str(input_list):
+    # 将文本预处理后[[], [], []]格式转为''。
+    list_ = []
+    for list in input_list:
+        list_ += list
+    return " ".join(list_)
+
 if __name__ == "__main__":
     pass

@@ -1,11 +1,15 @@
 # visualization.py 画图
 # -*- coding: utf-8 -*-
+import os
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import jsonlines
-from pyecharts import Map 
-from pyecharts import Geo
+from wordcloud import WordCloud
+from pyecharts.charts import Map,Geo
+
+Basic_Path = os.path.split(__file__)[0]    # 定位本程序所在的文件夹，而不是调用本包的程序所在的文件夹，后者可使用os.getcwd()
+font = os.path.join(Basic_Path, 'fonts', 'simfang.ttf')
 
 def plotbar(self, types, values, picname, top_k = 10, title = ""):
     '''
@@ -51,27 +55,27 @@ def plotbar(self, types, values, picname, top_k = 10, title = ""):
 
 def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
     # 绘制折线图
-    y = []
-    for t in h:
+    y = []
+    for t in h:
         y.append(float(record[t]))
-    lenh = range(len(h))
+    lenh = range(len(h))
     # print ('h = ', h)
     # print ('y = ', y)
-    plt.figure(figsize = picsize)
-    plt.plot(lenh, y, linewidth = 3, color = 'blue')
-    plt.xticks(lenh, h, rotation = 45)
-    plt.tick_params(axis='x', labelsize = 16)
-    plt.tick_params(axis='y', labelsize = 25)
+    plt.figure(figsize=picsize)
+    plt.plot(lenh, y, linewidth = 3, color = 'blue')
+    plt.xticks(lenh, h, rotation = 45)
+    plt.tick_params(axis='x', labelsize = 16)
+    plt.tick_params(axis='y', labelsize = 25)
     plt.ylim(Ylim)
-    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 40}
-    plt.xlabel(xname, font_x)
-    plt.ylabel(yname, font_y)
-    plt.title(picname, font_title)
+    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size': 28}
+    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size': 28}
+    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size': 40}
+    plt.xlabel(xname, font_x)
+    plt.ylabel(yname, font_y)
+    plt.title(picname, font_title)
     # for a, b in zip(lenh, y):
     #     plt.text(a, b, b, ha='center', va='bottom', fontsize=20)
-    plt.savefig(file_target + "/{}.jpg".format(picname))
+    plt.savefig(os.path.join(file_target, "{}.jpg".format(picname)))
     plt.clf()
 
 def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsize, file_target):
@@ -120,12 +124,10 @@ def draw3dpic(x, y, z, save_path, x_label = 'x', y_label = 'y', z_label = 'z'):
     # ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
     plt.savefig(save_path)   # 例如'lcoe_pic_1.jpg'
 
-def drawwordcloud(text, file_target):
+def drawwordcloud(text, file_target):
     # 绘制词云，text是以空格分开各个单词的str，也就是已经经过预处理（去除停用词和标点符号、已经英文词形还原或中文分词）的原始文本
-    from wordcloud import WordCloud
-    font = basic_path + '/simfang.ttf'
-    wordcloud = WordCloud(background_color="white", font_path=font, collocations=False, width=1000, height=860, margin=2).generate(text)
-    wordcloud.to_file(file_target)
+    Wordcloud = WordCloud(background_color='white', font_path=font, collocations=False, width=1000, height=860, margin=2).generate(text)
+    Wordcloud.to_file(file_target)
 
 def drawmap(inputfile, outputfile, name, name_minor = ''):
     # 绘制交互式地图，输入文件inputfile应为jsonl格式，内容为{"China": 1943, "NotACountry": 311, "Japan": 92, "Spain": 11, "Vietnam": 9, "Thailand": 16}格式

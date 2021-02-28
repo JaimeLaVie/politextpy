@@ -195,7 +195,7 @@ dictionary = {
         'Russia': 'ru',
         'Belarus': 'by', 
         'EuropeanUnion': 'eu', 'European Union': 'eu', 'the EU': 'eu', 'E.U.': 'eu',
-        'UnitedStates': 'us', 'United States': 'us', 'the US': 'us', 'U.S.': 'us', 'American': 'us', # 没有America以避免和北美南美的称呼相混淆。
+        'UnitedStates': 'us', 'United States': 'us', 'the US': 'us', 'U.S.': 'us', 'USA': 'us', 'American': 'us', # 没有America以避免和北美南美的称呼相混淆。
         'Canada': 'ca', 
         'Mexico': 'mx',
         'Brazil': 'br',
@@ -222,8 +222,11 @@ dictionary = {
     }
 }
 
-def rename_country(text, lang):
-    dic = dictionary['dictionary_' + lang]
+def rename_country(text, lang = 'any'):
+    if lang == 'any':
+        dic = {**dictionary['dictionary_zh'], **dictionary['dictionary_en'], **dictionary['dictionary_ja'], **dictionary['dictionary_ko']}
+    else:
+        dic = dictionary['dictionary_' + lang]
     for item in dic:
         if item in text:
             text = text.replace(item, ' countryname' + dic[item] + ' ')  # 前后加空格以免出现countrynamejpese、countrynameusa这种情况

@@ -39,6 +39,10 @@ class preprocessing_zh():
         punc_zh = '，。；‘’“”？《》【】（）：、\"\'#・「」' + add_punc
         return punc_zh, list(punc_zh)
 
+    def negation_expressions_zh(self, add_neg_word = []):
+        negation_expressions = ['不', '没']
+        return negation_expressions + add_neg_word
+
     def stopwords_zh(self, add_word = []):
         # 返回列表格式的中文停用词
         try:
@@ -66,7 +70,7 @@ class preprocessing_zh():
         # print(text)
         return text
 
-    def auto_prep(self, input, seg_method = 'jieba', add_punc = '', add_word = []):
+    def auto_prep(self, input, seg_method = 'jieba', keep_neg = True, add_punc = '', add_word = [], add_neg_word = []):
         # 综合运用以上子程序，自动完成一切文本预处理的程序，其输入应当是str格式。也可按需要单独执行以上各子程序。
         input = delurl(input)
         output = []
@@ -83,6 +87,28 @@ class preprocessing_zh():
                 for word in sentence:
                     sentence_new = sentence_new + re.split(punc_all, word)
                 sentence = [word for word in sentence_new if word != '']
+                # print(sentence)
+                if keep_neg == True:
+                    l = len(sentence)
+                    i = 0
+                    index_negword = []
+                    while i < l:
+                        for expression in self.negation_expressions_zh(add_neg_word):
+                            if sentence[i] == expression:
+                                index_negword.append(i)
+                        i += 1
+                    sentence_keepneg = []
+                    index_after_negword = []
+                    for index in index_negword:
+                        index_after_negword.append(index + 1)
+                    for index in range(l):
+                        if index in index_negword and index != l-1:
+                            sentence_keepneg.append(sentence[index] + sentence[index+1])
+                        elif index in index_after_negword:
+                            continue
+                        else:
+                            sentence_keepneg.append(sentence[index])
+                    sentence = sentence_keepneg
                 delete_words = self.stopwords_zh(add_word)
                 sentence = [word for word in sentence if word not in delete_words]
                 output.append(sentence)
@@ -107,6 +133,11 @@ class preprocessing_en():
         punc_en = string.punctuation + add_punc
         return punc_en, list(punc_en)
 
+    def negation_expressions_en(self, add_neg_phrase = [], add_neg_word = []):
+        # Return a list of negation expressions. Users can manually add new negation phrases (like 'by no means') and new negation words (like 'not').
+        negation_expressions = ['not at all', 'by no means', 'none of', 'not', 'no', 'never', 'neither', 'nor', 'nothing']
+        return add_neg_phrase + negation_expressions + add_neg_word
+
     def stopwords_en(self, add_word = []):
         # Return English stopwords in list format
         try:
@@ -128,6 +159,7 @@ class preprocessing_en():
         # specific
         text = re.sub(r"won\'t", "will not", text)
         text = re.sub(r"can\'t", "can not", text)
+        text = re.sub(r"cannot", "can not", text)
         text = re.sub(r"@", "" , text)         # removal of @
         text =  re.sub(r"http\S+", "", text)   # removal of URLs
         text = re.sub(r"#", "", text)          # hashtag processing
@@ -163,7 +195,7 @@ class preprocessing_en():
             lemmatized_output.append(self.lemmatizer.lemmatize(word, pos=wordnet_pos))
         return lemmatized_output
 
-    def auto_prep(self, input, add_punc = '', add_word = []):
+    def auto_prep(self, input, keep_neg = True, add_punc = '', add_word = [], add_neg_phrase = [], add_neg_word = []):
         # Complete preprocessing automatically using all the functions above. These functions may also be used seperatly subject to needs.
         input = delurl(input)
         output = []
@@ -183,11 +215,18 @@ class preprocessing_en():
                 for word in sentence:
                     sentence_new = sentence_new + re.split(punc_all, word)
                 sentence = [word for word in sentence_new if word != '']
+                if keep_neg == True:    # 将否定词与其后一个词合并以保留否定词。后续训练词向量时将合并后的词视为一个独立词来获取词向量。
+                    sentence = ' '.join(sentence)
+                    for expression in self.negation_expressions_en(add_neg_phrase, add_neg_word):
+                        if expression in sentence:
+                            sentence = sentence.replace(expression + ' ', 'non')
+                    sentence = sentence.split(' ')
                 delete_words = self.stopwords_en(add_word)
                 sentence = [word for word in sentence if word not in delete_words]
                 output.append(sentence)
         return output
 
+# 日语预处理未添加negation部分！
 class preprocessing_ja():
     def __init__(self):
         ''' Constructor for this class. '''
@@ -240,6 +279,7 @@ class preprocessing_ja():
                 output.append(sentence)
         return output
 
+# 朝鲜语预处理未添加negation部分！
 class preprocessing_ko():
     def __init__(self):
         ''' Constructor for this class. '''

@@ -78,7 +78,7 @@ def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
     plt.savefig(os.path.join(file_target, "{}.jpg".format(picname)))
     plt.clf()
 
-def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsize, file_target):
+def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, color1='blue', color2='green', color3='red', picsize, file_target):
     # 绘制包含三条曲线的折线图
     y1 = []
     y2 = []
@@ -91,9 +91,9 @@ def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsi
     # print ('h = ', h)
     # print ('y = ', y)
     plt.figure(figsize = picsize)
-    plt.plot(lenh, y1, linewidth = 3, color = 'blue', label='Positive Percentage')
-    plt.plot(lenh, y2, linewidth = 3, color = 'green', label='Negative Percentage')
-    plt.plot(lenh, y3, linewidth = 3, color = 'red', label='Overall Sentiment')
+    plt.plot(lenh, y1, linewidth = 3, color = color1, label='Positive Percentage')
+    plt.plot(lenh, y2, linewidth = 3, color = color2, label='Negative Percentage')
+    plt.plot(lenh, y3, linewidth = 3, color = color3, label='Overall Sentiment')
     plt.xticks(lenh, h, rotation = 45)
     plt.tick_params(axis='x', labelsize = 16)
     plt.tick_params(axis='y', labelsize = 25)

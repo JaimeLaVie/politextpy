@@ -78,7 +78,7 @@ def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
     plt.savefig(os.path.join(file_target, "{}.jpg".format(picname)))
     plt.clf()
 
-def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, color1='blue', color2='green', color3='red', picsize, file_target):
+def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsize, file_target, color1='blue', color2='green', color3='red'):
     # 绘制包含三条曲线的折线图
     y1 = []
     y2 = []

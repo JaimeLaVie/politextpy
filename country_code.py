@@ -9,7 +9,7 @@ dictionary = {
         '中国': 'cn', '中國': 'cn', '中华人民共和国': 'cn', '中華人民共和國': 'cn', '中華人民共和国': 'cn',
         '日本国':'jp', '日本國':'jp', '日本':'jp',             # 包含短名称的长名称在前，优先识别，避免出现"countrynamejp国"的情况
         '韩国': 'kr', '韓國': 'kr', '韓国': 'kr', '大韩民国': 'kr', '大韓民國': 'kr', '大韓民国': 'kr', '南朝鲜': 'kr', '南朝鮮': 'kr', '南韩': 'kr',
-        '朝鲜民主主义人民共和国': 'kp', '朝鲜': 'kp', '朝鮮民主主義人民共和國': 'kp', '朝鮮': 'kp', '北韩': 'kp',
+        '朝鲜民主主义人民共和国': 'kp', '北朝鲜': 'kp', '朝鲜': 'kp', '朝鮮民主主義人民共和國': 'kp', '北朝鮮': 'kp', '朝鮮': 'kp', '北韩': 'kp',
         '印度尼西亚': 'id', '印度尼西亞': 'id', '印尼': 'id',
         '马来西亚': 'my', '馬來西亞': 'my',
         '菲律宾': 'pl', '菲律賓': 'pl',
@@ -127,7 +127,7 @@ dictionary = {
         'Lithuania': 'lt',
         'Russia': 'ru',
         'Belarus': 'by', 
-        'EuropeanUnion': 'eu', 'European Union': 'eu', 'the EU': 'eu', 'E.U.': 'eu',
+        'EuropeanUnion': 'eu', 'European Union': 'eu', 'the EU': 'eu', 'E.U.': 'eu', ' EU ': 'eu',
         'UnitedStates': 'us', 'United States': 'us', 'the US': 'us', 'U.S.': 'us', 'USA': 'us', 'American': 'us', # 没有America以避免和北美南美的称呼相混淆。
         'Canada': 'ca', 
         'Mexico': 'mx',

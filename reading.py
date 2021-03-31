@@ -4,16 +4,19 @@ import pandas as pd
 import docx
 from pdfminer.high_level import extract_text
 
-def readjsonl(file_path, content = 'text'):
-    output = []
+def readjsonl(file_path, content = 'text', mode = 'list'):
+    output_list = []
     with open (file_path, "r") as f:
         for line in jsonlines.Reader(f):
             try:
-                output.append(line[content])
+                output_list.append(line[content])
             except:
                 pass
-    
-    return output
+    if mode == 'list':
+        return output_list
+    if mode == 'str':
+        output_str = " ".join(output_list)
+        return output_str
 
 def readExcel(file_path, sheet_name):
     # xlsx documents

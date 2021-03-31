@@ -53,12 +53,16 @@ def plotbar(self, types, values, picname, top_k = 10, title = ""):
     #plt.show()
     plt.savefig("./{}.tiff".format(picname), format='tiff')
 
-def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
+def plotline(h, record, picname, xname, yname, picsize, file_target):
     # 绘制折线图
     y = []
     for t in h:
         y.append(float(record[t]))
     lenh = range(len(h))
+    Ylim_lower = min(y)
+    Ylim_upper = max(y)
+    margin = 0.05 * (Ylim_upper - Ylim_lower)
+    Ylim = [Ylim_lower - margin, Ylim_upper + margin]
     # print ('h = ', h)
     # print ('y = ', y)
     plt.figure(figsize=picsize)
@@ -78,8 +82,12 @@ def plotline(h, record, picname, xname, yname, Ylim, picsize, file_target):
     plt.savefig(os.path.join(file_target, "{}.jpg".format(picname)))
     plt.clf()
 
-def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsize, file_target, color1='blue', color2='green', color3='red'):
+def plottriline(h, record1, record2, record3, picname, xname, yname, picsize, file_target, color1='blue', color2='green', color3='red', legend_loc = 'best'):
     # 绘制包含三条曲线的折线图
+    # h是横坐标的具体内容的list，如日期，可以用来控制绘图的先后顺序（例如时间顺序，list里先出现的先画）；
+    # record123是三条折线的数值，使用字典{}格式，字典里的每一个item都对应h里的一个值
+    # picname是图中显示的标题，也是保存的文件名。xname和yname是横纵坐标的名称，Ylim是纵坐标范围，格式为[下限, 上限]
+    # picsize是图片大小，格式为[长度, 宽度]，file_target是保存地址。
     y1 = []
     y2 = []
     y3 = []
@@ -88,23 +96,27 @@ def plottriline(h, record1, record2, record3, picname, xname, yname, Ylim, picsi
         y2.append(float(record2[t]))
         y3.append(float(record3[t]))
     lenh = range(len(h))
+    Ylim_lower = min([min(y1), min(y2), min(y3)])
+    Ylim_upper = max([max(y1), max(y2), max(y3)])
+    margin = 0.05 * (Ylim_upper - Ylim_lower)
+    Ylim = [Ylim_lower - margin, Ylim_upper + margin]
     # print ('h = ', h)
     # print ('y = ', y)
     plt.figure(figsize = picsize)
-    plt.plot(lenh, y1, linewidth = 3, color = color1, label='Positive Percentage')
-    plt.plot(lenh, y2, linewidth = 3, color = color2, label='Negative Percentage')
-    plt.plot(lenh, y3, linewidth = 3, color = color3, label='Overall Sentiment')
+    plt.plot(lenh, y1, linewidth = picsize[0]*picsize[1]/2500, color = color1, label = 'Positive Percentage')
+    plt.plot(lenh, y2, linewidth = picsize[0]*picsize[1]/2500, color = color2, label = 'Negative Percentage')
+    plt.plot(lenh, y3, linewidth = picsize[0]*picsize[1]/2500, color = color3, label = 'Overall Sentiment')
     plt.xticks(lenh, h, rotation = 45)
-    plt.tick_params(axis='x', labelsize = 16)
-    plt.tick_params(axis='y', labelsize = 25)
+    plt.tick_params(axis='x', labelsize = picsize[0]*picsize[1]/520)
+    plt.tick_params(axis='y', labelsize = picsize[0]*picsize[1]/100)
     plt.ylim(Ylim)
-    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 28}
-    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 40}
+    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/40}
+    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/40}
+    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/35}
     plt.xlabel(xname, font_x)
     plt.ylabel(yname, font_y)
     plt.title(picname, font_title)
-    plt.legend()
+    plt.legend(loc = legend_loc, fontsize = picsize[0]*picsize[1]/150)
     plt.savefig(file_target + "/{}.jpg".format(picname))
     plt.clf()
 

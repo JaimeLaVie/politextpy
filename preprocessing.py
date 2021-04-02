@@ -27,7 +27,7 @@ def delurl(text):
 class preprocessing_zh():
     def __init__(self):
         ''' Constructor for this class. '''
-        # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇以供删除不相关推文。')
+        # print('中文文本预处理，输入应当是str格式。预处理包括：1）分词，2）删除停用词和标点符号。同时，提供中文推特里常见的色情词汇用以删除不相关推文。')
         self.basic_path = Basic_Path
         self.thuseg = thulac.thulac(seg_only = True, filt = False)
         self.stopwords = []

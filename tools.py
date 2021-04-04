@@ -5,6 +5,8 @@ import langid    # 需要经常反复执行的程序要用到的包在这里impo
 import numpy as np
 import sys
 
+Basic_Path = os.path.split(__file__)[0]
+
 def words_frequency(inputfile, num):
     # 获得词频。输入格式是[[], [], []]，list里的每个list都是已经分过词的句子；num是返回的最高频词的个数；返回值是一个高频词的list。
     print ("1. Calculating word frequencies...")
@@ -83,7 +85,7 @@ def tsne_value(tokens):
 
     return x, y
 
-def tsne_plot(model, chosen_words, save_path, picname):
+def tsne_plot(model, chosen_words, save_path, picname, lang):
     """ 
     Creates and TSNE model and plots it
     chsen_words should be like this {'b': ['happy', 'unhappy', 'sad', 'glad'], 'r': ['fear', 'fearless'], 'c': ['angry', 'pleased', 'pleasant']}
@@ -92,6 +94,14 @@ def tsne_plot(model, chosen_words, save_path, picname):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    if lang == 'zh' or 'ja':
+        from matplotlib.font_manager import FontProperties
+        font_path = os.path.join(Basic_Path, "fonts", "simfang.ttf")
+        font = FontProperties(fname=font_path, size=14)
+    if lang == 'ko':
+        from matplotlib.font_manager import FontProperties
+        font_path = os.path.join(Basic_Path, "fonts", "NanumGothic.ttf")
+        font = FontProperties(fname=font_path, size=14)
     
     print("Start drawing " + picname + "...")
     labels = []
@@ -114,15 +124,25 @@ def tsne_plot(model, chosen_words, save_path, picname):
     for i in range(len(x)):
         if labels[i] in chosen_words_transformed:
             plt.scatter(x[i], y[i], s=40, c=chosen_words_transformed[labels[i]], marker='o', edgecolors='none')
-            plt.annotate(labels[i],
-                        # fontproperties=font,
-                        xy=(x[i], y[i]),
-                        xytext=(5, 2),
-                        fontsize='xx-large',
-                        textcoords='offset points',
-                        color=chosen_words_transformed[labels[i]],
-                        ha='right',
-                        va='bottom')
+            if lang != 'en':
+                plt.annotate(labels[i],
+                            fontproperties=font,
+                            xy=(x[i], y[i]),
+                            xytext=(5, 2),
+                            fontsize='xx-large',
+                            textcoords='offset points',
+                            color=chosen_words_transformed[labels[i]],
+                            ha='right',
+                            va='bottom')
+            else:
+                plt.annotate(labels[i],
+                            xy=(x[i], y[i]),
+                            xytext=(5, 2),
+                            fontsize='xx-large',
+                            textcoords='offset points',
+                            color=chosen_words_transformed[labels[i]],
+                            ha='right',
+                            va='bottom')
     plt.savefig(os.path.join(save_path, '{}.png'.format(picname)))
     plt.clf()
 

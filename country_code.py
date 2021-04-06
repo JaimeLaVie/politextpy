@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # country_code.py 将文本中的各种国家的各种称谓统一
 
 # 以下国家编码参照ISO 3166-1标准，见https://zh.wikipedia.org/wiki/ISO_3166-1

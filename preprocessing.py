@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # preprocessing.py 中英日韩文本预处理。自动处理的结果若需转成str，请使用tools.py里的list2str()。
 import os
 import re

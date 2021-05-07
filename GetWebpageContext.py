@@ -12,13 +12,9 @@ from oauth2client.client import GoogleCredentials
 
 
 #textに保存する
-def save_as_text(articles:list, name:str, pattern='w'):
+def save_as_text(context:str, name:str, pattern='w'):
   file = open(f'{name}.text', pattern, encoding = 'utf-8')
-  for i in range(0, len(articles)):
-    file.write(articles[i]['日付'] +'\n')
-    file.write(articles[i]['url'] +'\n')
-    file.write(articles[i]['リスト'] +'\n')
-    file.write(articles[i]['本文'] + '\n' + '\n' + '\n')
+  file.write(context)
   file.close()
   
   

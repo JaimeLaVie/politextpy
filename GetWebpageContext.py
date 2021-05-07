@@ -63,6 +63,16 @@ drive = GoogleDrive(gauth)
 '''
 
 
+def save(filename:str):
+  #listをjsonとして保存する
+  save_as_json(Context, f'{filename}', 'a')
+  #listをtextとして保存する
+  save_as_text(Context, f'{filename}', 'a')
+  #GoogleDriverへアップロードする
+  save_to_GoogleDriver(f'{filename}.text')
+  save_to_GoogleDriver(f'{filename}.json')
+
+
 def get_range(paragraphs:list, alpha=0):
   diff = [len(paragraphs[i])-len(paragraphs[i-1]) for i in range(1, len(paragraphs))]
   diff.insert(0, len(paragraphs[0]))
@@ -72,7 +82,7 @@ def get_range(paragraphs:list, alpha=0):
   return (start, end)
 
 
-def get_text(url:str, method='requests', alpha=0):
+def get_text(url:str, method='requests', alpha=0, filename='Context'):
   if method == 'requests':#
     response = requests.get(url)
     response.encoding = response.apparent_encoding
@@ -107,5 +117,6 @@ def get_text(url:str, method='requests', alpha=0):
   paragraphs = paragraphs[start:end+1]
   #本文を獲得する
   text = '\n'.join(paragraphs)
-
+  save(filename)
+  
   return [text, paragraphs]

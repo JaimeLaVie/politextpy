@@ -118,5 +118,4 @@ def get_text(url:str, method='requests', alpha=0, filename='Context'):
   #本文を獲得する
   text = '\n'.join(paragraphs)
   save(filename)
-  
   return [text, paragraphs]

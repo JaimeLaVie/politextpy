@@ -107,16 +107,16 @@ def plottriline(h, record1, record2, record3, picname, xname, yname, picsize, fi
     plt.plot(lenh, y2, linewidth = picsize[0]*picsize[1]/2500, color = color2, label = 'Negative Percentage')
     plt.plot(lenh, y3, linewidth = picsize[0]*picsize[1]/2500, color = color3, label = 'Overall Sentiment')
     plt.xticks(lenh, h, rotation = 45)
-    plt.tick_params(axis='x', labelsize = picsize[0]*picsize[1]/520)
-    plt.tick_params(axis='y', labelsize = picsize[0]*picsize[1]/100)
+    plt.tick_params(axis='x', labelsize = 120) # 200
+    plt.tick_params(axis='y', labelsize = 200) # 200
     plt.ylim(Ylim)
-    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/40}
-    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/40}
-    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : picsize[0]*picsize[1]/35}
+    font_x = {'family': 'Times New Roman', 'weight': 'normal', 'size' : 300} # 350
+    font_y = {'family': 'Times New Roman', 'weight': 'normal', 'size' : 300} # 350
+    font_title = {'family': 'Times New Roman', 'weight': 'normal', 'size'   : 250} # 400
     plt.xlabel(xname, font_x)
     plt.ylabel(yname, font_y)
     plt.title(picname, font_title)
-    plt.legend(loc = legend_loc, fontsize = picsize[0]*picsize[1]/150)
+    plt.legend(loc = legend_loc, fontsize = picsize[0]*picsize[1]/100) # 90
     plt.savefig(file_target + "/{}.jpg".format(picname))
     plt.clf()
 

@@ -82,7 +82,7 @@ def plotline(h, record, picname, xname, yname, picsize, file_target):
     plt.savefig(os.path.join(file_target, "{}.jpg".format(picname)))
     plt.clf()
 
-def plottriline(h, record1, record2, record3, picname, xname, yname, picsize, file_target, color1='blue', color2='green', color3='red', legend_loc = 'best'):
+def plottriline(h, record1, record2, record3, picname, xname, yname, picsize, file_target, label1 = 'Positive Percentage', label2 = 'Negative Percentage', label3 = 'Overall Sentiment', color1='blue', color2='green', color3='red', legend_loc = 'best'):
     # 绘制包含三条曲线的折线图
     # h是横坐标的具体内容的list，如日期，可以用来控制绘图的先后顺序（例如时间顺序，list里先出现的先画）；
     # record123是三条折线的数值，使用字典{}格式，字典里的每一个item都对应h里的一个值
@@ -103,9 +103,9 @@ def plottriline(h, record1, record2, record3, picname, xname, yname, picsize, fi
     # print ('h = ', h)
     # print ('y = ', y)
     plt.figure(figsize = picsize)
-    plt.plot(lenh, y1, linewidth = picsize[0]*picsize[1]/2500, color = color1, label = 'Positive Percentage')
-    plt.plot(lenh, y2, linewidth = picsize[0]*picsize[1]/2500, color = color2, label = 'Negative Percentage')
-    plt.plot(lenh, y3, linewidth = picsize[0]*picsize[1]/2500, color = color3, label = 'Overall Sentiment')
+    plt.plot(lenh, y1, linewidth = picsize[0]*picsize[1]/2500, color = color1, label = label1)
+    plt.plot(lenh, y2, linewidth = picsize[0]*picsize[1]/2500, color = color2, label = label2)
+    plt.plot(lenh, y3, linewidth = picsize[0]*picsize[1]/2500, color = color3, label = label3)
     plt.xticks(lenh, h, rotation = 45)
     plt.tick_params(axis='x', labelsize = 120) # 200
     plt.tick_params(axis='y', labelsize = 200) # 200

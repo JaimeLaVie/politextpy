@@ -138,7 +138,7 @@ def Method2(url:str):
 
 
 #長い文章になると、distanceに5を、短い文章になると、distanceに3を指定する
-def get_text(url:str, method='requests', filename='Context', factor=5, distance=10):
+def get_text(url:str, method='requests', filename='Context', factor=3.5, distance=10):
   if method == 'requests':
     paragraphs = Method1(url)
   elif method == 'selenium':
@@ -160,4 +160,4 @@ def get_text(url:str, method='requests', filename='Context', factor=5, distance=
 
 
 if __name__ == '__main__':
-  text, paragraphs = get_text('https://www.asahi.com/articles/ASP8R63RCP8RUTIL02W.html?iref=comtop_7_04', method='requests', filename='Context', factor=5, distance=10)
+  text, paragraphs = get_text('https://www.asahi.com/articles/ASP8R63RCP8RUTIL02W.html?iref=comtop_7_04', method='requests', filename='Context', factor=3.5, distance=10)

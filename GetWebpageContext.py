@@ -160,4 +160,4 @@ def get_text(url:str, method='requests', filename='Context', factor=3.5, distanc
 
 
 if __name__ == '__main__':
-  text, paragraphs = get_text('https://www.asahi.com/articles/ASP8R63RCP8RUTIL02W.html?iref=comtop_7_04', method='requests', filename='Context', factor=3.5, distance=3)
+  text, paragraphs = get_text('https://www.asahi.com/articles/ASP8R63RCP8RUTIL02W.html?iref=comtop_7_04', method='requests', filename='Context', factor=3.5, distance=10)

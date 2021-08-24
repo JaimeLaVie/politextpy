@@ -73,30 +73,50 @@ def save(Context:list, filename:str):
 def get_range(paragraphs:list, factor, distance):
   diff = [len(paragraphs[i])-len(paragraphs[i-1]) for i in range(1, len(paragraphs))]
   diff.insert(0, len(paragraphs[0]))
-  #print(diff)
+  print(diff)
+  #length = [len(x) for x in paragraphs]
+  #length_filter = []
   filter = []
   j_prev = 0
   for j in range(0, len(diff)):
     if abs(diff[j]) >= max(diff)/factor:
-      if j - j_prev <= distance:
-        j_prev = j
-        filter.append(j)
-      elif not filter:
-        j_prev = j
-        filter.append(j)  
-  #print(filter)
+      if diff[j]*diff[j_prev] <= 0 and diff[j] < 0:
+        if j - j_prev <= distance:
+          j_prev = j
+          filter.append(j)
+        elif not filter:
+          j_prev = j
+          filter.append(j)  
+      elif diff[j]*diff[j_prev] <= 0 and diff[j] >= 0:
+        if j - j_prev <= distance - 5:
+          j_prev = j
+          filter.append(j)
+        elif not filter:
+          j_prev = j
+          filter.append(j)
+      else:
+        if j - j_prev <= distance:
+          j_prev = j
+          filter.append(j)
+        elif not filter:
+          j_prev = j
+          filter.append(j)
+  print(filter)
   start = filter[0]
   end = filter[-1]
   return [start, end]
+
 
 def Method1(url:str):
   response = requests.get(url)
   response.encoding = response.apparent_encoding
   html = response.text
   soup = BeautifulSoup(html)
+  [s.extract() for s in soup('ul')]
   paragraphs = soup.find('body').find_all('p')
   paragraphs = [x.get_text(separator='') for x in paragraphs]
   return paragraphs
+
 
 def Method2(url:str):
   #ブラウザードライブを起動させる
@@ -116,8 +136,9 @@ def Method2(url:str):
   driver.quit()
   return paragraphs
 
+
 #長い文章になると、distanceに5を、短い文章になると、distanceに3を指定する
-def get_text(url:str, method='requests', filename='Context', factor=3.5, distance=3):
+def get_text(url:str, method='requests', filename='Context', factor=3.5, distance=10):
   if method == 'requests':
     paragraphs = Method1(url)
   elif method == 'selenium':
@@ -125,9 +146,9 @@ def get_text(url:str, method='requests', filename='Context', factor=3.5, distanc
   else:
     pass
   #不要の文字を削除する
-  paragraphs = [re.sub('[ \r\n\u3000]', '', x) for x in paragraphs]
+  paragraphs = [re.sub('[ 　\r\n\u3000]', '', x) for x in paragraphs]
   paragraphs = [x for x in paragraphs if len(x)>0]
-  #print([len(x) for x in paragraphs])
+  print([len(x) for x in paragraphs])
   #本文の範囲を獲得する
   start, end = get_range(paragraphs, factor, distance)
   #本文に所属する段落を獲得する
@@ -135,9 +156,8 @@ def get_text(url:str, method='requests', filename='Context', factor=3.5, distanc
   #段取りなしで本文を獲得する
   text = ''.join(paragraphs)
   #save(paragraphs, filename)
-  #y = [len(x) for x in paragraphs]
-  #plt.plot(y, marker='o')
   return [text, paragraphs]
+
 
 if __name__ == '__main__':
   text, paragraphs = get_text('https://www.asahi.com/articles/ASP8R63RCP8RUTIL02W.html?iref=comtop_7_04', method='requests', filename='Context', factor=3.5, distance=3)

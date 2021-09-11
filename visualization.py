@@ -163,7 +163,7 @@ def drawmap(inputfile, outputfile, name, name_minor = ''):
             map0.add('modified to a 0-100 scale', attr = countries, value = numbers_modified, maptype="world", is_roam=True, is_map_symbol_show=False, is_visualmap=True, visual_text_color='#000')
             map0.render(path=outputfile)
 
-def drawreletivemap(inputfile_pos, inputfile_neg, outputfile, min_valid_number, name, name_minor = ''):
+def drawrelativemap(inputfile_pos, inputfile_neg, outputfile, min_valid_number, name, name_minor = ''):
     # 基本功能同drawmap，但是会计算积极情感和消极情感在各个国家的三种比较值（差、差x50、差归一化到0-100区间）
     country_names = []
     reletive = {}

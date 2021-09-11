@@ -66,20 +66,21 @@ def GetText(url:str, filename='Context'):
   soup = BeautifulSoup(html)
   
   [s.extract() for s in soup('ul')]
-  paragraphs = soup.find('body').find_all('p')
+  paragraphs = soup.find('body').find_all('p')[:-2]
   lengths = [len(x.get_text()) for x in paragraphs]
   MaxLengthIndex = lengths.index(max(lengths))
   p_max = soup.find('body').find_all('p')[MaxLengthIndex]
-  context = p_max.parent.get_text()
+  paragraphs = p_max.parent.find_all('p')
+  paragraphs = [x.get_text() for x in paragraphs]
   
   #不要の文字を削除する
-  context = re.sub('[ 　\r\n\u3000]', '', context)
+  paragraphs = [re.sub('[ 　\r\n\u3000]', '', x) for x in paragraphs]
+  paragraphs = [x for x in paragraphs if len(x)>0]
+  #段取りなしで本文を獲得する
+  context = ''.join(paragraphs)
   print(context)
-  list_temp = []
-  list_temp.append(context)
-  save_as_text(list_temp, filename)
+  save_as_text(context, filename)
   return context
-
 
 
 if __name__ == '__main__':

@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import json
 import re
 
+
+
 #textに保存する
 def save_as_text(context:list, name:str, pattern='w'):
   file = open(f'{name}.text', pattern, encoding = 'utf-8')
@@ -65,9 +67,11 @@ def GetText(url:str, filename='Context'):
   
   [s.extract() for s in soup('ul')]
   paragraphs = soup.find('body').find_all('p')
-  MaxLengthIndex = [len(x) for x in paragraphs].index(max([len(x) for x in paragraphs]))
+  lengths = [len(x.get_text()) for x in paragraphs]
+  MaxLengthIndex = lengths.index(max(lengths))
   p_max = soup.find('body').find_all('p')[MaxLengthIndex]
   context = p_max.parent.get_text()
+  
   #不要の文字を削除する
   context = re.sub('[ 　\r\n\u3000]', '', context)
   print(context)
@@ -75,6 +79,7 @@ def GetText(url:str, filename='Context'):
   list_temp.append(context)
   save_as_text(list_temp, filename)
   return context
+
 
 
 if __name__ == '__main__':

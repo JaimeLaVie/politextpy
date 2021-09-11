@@ -59,28 +59,42 @@ def save(Context:list, filename:str):
   save_to_GoogleDriver(f'{filename}.json')
 
 
-def GetText(url:str, filename='Context'):
-  response = requests.get(url)
-  response.encoding = response.apparent_encoding
-  html = response.text
-  soup = BeautifulSoup(html)
+def GetText(url:str, separator='', filename='Context'):
+  success = False
+  attempt = 0
+  while attempt < 3 and success = False
+    try:
+      response = requests.get(url)
+      response.encoding = response.apparent_encoding
+      html = response.text
+      soup = BeautifulSoup(html)
   
-  [s.extract() for s in soup('ul')]
-  paragraphs = soup.find('body').find_all('p')[:-2]
-  lengths = [len(x.get_text()) for x in paragraphs]
-  MaxLengthIndex = lengths.index(max(lengths))
-  p_max = soup.find('body').find_all('p')[MaxLengthIndex]
-  paragraphs = p_max.parent.find_all('p')
-  paragraphs = [x.get_text() for x in paragraphs]
+      [s.extract() for s in soup('ul')]
+      #著作権を声明する部分を削除する
+      paragraphs = soup.find('body').find_all('p')[:-2]
+      #一番長い段落を見つけ出し、そのインデックスを変数MaxLengthIndexとして保存する
+      lengths = [len(x.get_text()) for x in paragraphs]
+      MaxLengthIndex = lengths.index(max(lengths))
+      p_max = soup.find('body').find_all('p')[MaxLengthIndex]
+      paragraphs = p_max.parent.find_all('p')
+      paragraphs = [x.get_text() for x in paragraphs]
   
-  #不要の文字を削除する
-  paragraphs = [re.sub('[ 　\r\n\u3000]', '', x) for x in paragraphs]
-  paragraphs = [x for x in paragraphs if len(x)>0]
-  #段取りなしで本文を獲得する
-  context = ''.join(paragraphs)
-  print(context)
+      #不要の文字を削除する
+      if separator == '':
+        punctuation = '[ 　\r\n\u3000]'
+      else:
+        punctuation = '[　\r\n\u3000]' 
+      paragraphs = [re.sub(punctuation, '', x) for x in paragraphs]
+      paragraphs = [x for x in paragraphs if len(x)>0]
+      #段取りなしで本文を獲得する
+      context = ''.join(paragraphs)
+      print(context)
+      success = True
+    except:
+      attempt += 1
   save_as_text(context, filename)
   return context
+
 
 
 if __name__ == '__main__':

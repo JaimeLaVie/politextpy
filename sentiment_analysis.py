@@ -1,4 +1,5 @@
 # sentiment_analysis.py 情感计算
+# This is an adapted version of Vashishtha and colleague’s work, see: https://github.com/SrishtiVashishtha/Fuzzy-Rule-based-Unsupervised-Sentiment-Analysis-from-Social-Media-Posts.
 # import os
 import numpy as np
 import skfuzzy as fuzz

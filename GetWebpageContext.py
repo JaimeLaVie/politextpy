@@ -84,4 +84,4 @@ def GetText(url:str, filename='Context'):
 
 
 if __name__ == '__main__':
-  context = GetText('https://www.asahi.com/articles/ASP8F6J6CP8FULZU008.html?iref=pc_rellink_03', filename='Context')
+  context = GetText('https://mainichi.jp/articles/20210911/k00/00m/010/067000c?cx_testId=122&cx_testVariant=cx_2&cx_artPos=2#cxrecs_s', filename='Context')

@@ -62,7 +62,7 @@ def save(Context:list, filename:str):
 def GetText(url:str, separator='', filename='Context'):
   success = False
   attempt = 0
-  while attempt < 3 and success = False
+  while attempt < 3 and success = False:
     try:
       response = requests.get(url)
       response.encoding = response.apparent_encoding

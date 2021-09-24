@@ -19,8 +19,6 @@ Online public opinion initiates our vision to entrench a novel field of study, *
 + Arising Global Politics Issues: Interacting Geopolitics Dynamics, Major Powers Play, Aussenpolitik and Innenpolitik.
 
 
-This project initiated from a Tsinghua University master thesis, two *IEEE* conference submissions, three Starbucks meetings and numerous research questions urging for answers. And it will help more of such assignments and aspiration of more people, in places we may have never been to, in ways we may have never imagined, to solve puzzles we may have never encountered. Afterall that is the very starting point and destination of us as developer, researcher, practitioner and educator.
-
 ## How does *Politextpy* function?
 
 *Politextpy* is a Python Package aimed at first to process and analyze political texts, e.g., online posts and news outlets' texts about some certain agenda. With enlarging functions, it can also be applied in the analysis of other text for research projects tackled by academia or industry.
@@ -35,18 +33,42 @@ This project initiated from a Tsinghua University master thesis, two *IEEE* conf
 + Comma, period, space, newline characters and copyright statement would be deleted. 
 + The program is **GetWebpageContext.py**
 
+### Mapping Country Names
+
++ The official name and multiple aliases, abbreviations, or even nicknames are included.
++ Employs the ISO 3166-1 standard to assign a two- digit code to each country, e.g., Sweden equals ’se’.
++ 64 Countries covering the 5 permanent members of the United Nations Security Council, G7 and G20 countries, member states of Organisation for Economic Co-operation and Development (OECD).
++ The program is **country_code.py**
+
 ### Preprocessing
 
-+ GetWebpageContext.py
++ The preprocessing includes segmentation, merging negation words (e.g., not, no) with its following word, deleting stop words, removing unnecessary punctuations & phrases.
++ The program is **preprocessing.py**
 
-##### English
+### Topic Model
 
-##### Chinese
-
-### Topic Models
++ Politextpy adopts *Latent Dirichlet Allocation (LDA)*
++ The program is **topic_models.py**
 
 ### Sentiment Analysis
 
-##### Unsupervised Sentiment Analysis
++ Politextpy offers a fuzzy rule based sentiment analysis tool, an adapted version of Vashishtha and colleague’s work.
++ The program is **sentiment_analysis.py**
 
-##### Supervised Sentiment Analysis
+### Visualization Tools
+
++ Politextpy provides basic functions like bar chart and line chart drawing, as well as more complicated word cloud and 3-dimensional figure creating.
++ Politextpy incorporates several map-making functions, especially for world map drawing. It can produce normal jpg or png format maps as well as inter- active maps in html format.
+
+### Additional Tools
+
++ *Words_frequency* returns the top n frequently used words and their frequencies, where n is specified by the user.
++ *8Detect_lang* detects the language of the text, helping choose the correct preprocessing method.
++ *Key_word_extraction* extracts key words of the given texts, which can complement the results of the topic model.
++ *Tsne_plot* and *tsne_value8, using t-distributed stochastic neigh- bor embedding (t-SNE) method, conduct dimension reduction to high dimensional vectors, enabling them to be shown in a 2D picture.
++ And MORE...
+
+
+## Words From Us ##
+
+This project initiated from a Tsinghua University master thesis, two *IEEE* conference submissions, three Starbucks meetings and numerous research questions urging for answers. And it will help more of such assignments and aspiration of more people, in places we may have never been to, in ways we may have never imagined, to solve puzzles we may have never encountered. Afterall that is the very starting point and destination of us as developer, researcher, practitioner and educator.

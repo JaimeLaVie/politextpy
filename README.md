@@ -4,7 +4,7 @@
 
 We are overwhelmed by this era of overloading information, emerging misinformation and disinformation yet we are at the same time empowered by it to embark on an unprecedented journey of research for international issues. We are exhilarated by the unexampled possibilities computational methods brought us to delineate the dynamics of domestic and international politics. 
 
-Online public opinion initiates our vision to entrench a novel field of study, *Computational Political Communication*. We hope to build up this vision brick by brick, and *Politextpy* is one of the founding bricks. We believe that it is not only for our own research but for further demand from a broader academia. With this open-source package, we hope to equip *Python* users to process English, Chinese, Japanese and Korean languages text via **1）Reading Files** **2)Web Content Acquisition** **1) Preprocessing**, **2) Topic Models** and **3) Supervised/Unsupervised Sentiment Analysis**. And we are more than ever expecting to add more languages and functions in the very near future.
+Online public opinion initiates our vision to entrench a novel field of study, *Computational Political Communication*. We hope to build up this vision brick by brick, and *Politextpy* is one of the founding bricks. We believe that it is not only for our own research but for further demand from a broader academia. With this open-source package, we hope to equip *Python* users to process English, Chinese, Japanese and Korean languages text via **1）Reading Files** **2)Web Content Acquisition**, **3) Mapping Country Names**, **4)Preprocessing**, **5) Topic Models** , **6) Supervised/Unsupervised Sentiment Analysis**, **7)Visualization** and **8)Additional Tools** We are more than ever expecting to add more languages and functions in the very near future.
 
 #### Online Public Opinion as A New Approach
 
@@ -26,6 +26,8 @@ This project initiated from a Tsinghua University master thesis, two *IEEE* conf
 *Politextpy* is a Python Package for the functions of **1) Preprocessing**, **2) Topic Models** and **3) Supervised/Unsupervised Sentiment Analysis**. It is aimed at first to process and analyze political texts, e.g., online posts and news outlets' texts about some certain agenda. With enlarging functions, it can also be applied in the analysis of other text for research projects tackled by academia or industry.
 
 ### Reading Files
+
+
 
 ### Preprocessing
 

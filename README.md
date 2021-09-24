@@ -65,7 +65,7 @@ Online public opinion initiates our vision to entrench a novel field of study, *
 + *Words_frequency* returns the top n frequently used words and their frequencies, where n is specified by the user.
 + *8Detect_lang* detects the language of the text, helping choose the correct preprocessing method.
 + *Key_word_extraction* extracts key words of the given texts, which can complement the results of the topic model.
-+ *Tsne_plot* and *tsne_value8, using t-distributed stochastic neigh- bor embedding (t-SNE) method, conduct dimension reduction to high dimensional vectors, enabling them to be shown in a 2D picture.
++ *Tsne_plot* and *tsne_value8*, using t-distributed stochastic neigh- bor embedding (t-SNE) method, conduct dimension reduction to high dimensional vectors, enabling them to be shown in a 2D picture.
 + And MORE...
 
 

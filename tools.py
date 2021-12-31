@@ -45,31 +45,31 @@ Basic_Path = os.path.split(__file__)[0]
 def reorganize_format(text):
     # This program reorganizes the format of the texts extracted from scanned-copy PDF files. One paragraph of the texts extracted from these files are usually actually one line in the original file, and the actual split points for paragraphs are '\n\n'. Therefore, this program reorganizes the texts to match its original format.
     text_processed == ''
-    for i in range(len(text)):  # 整理格式
-        if text[i] == '\n' and i != len(text) - 1:
-            if text[i + 1] == '\n':
-                text_processed += '\n\n'
-            else:
-                text_processed += ' '
-        else:
-            text_processed += text[i]
+    for i in range(len(text)): # 整理格式
+        if text[i] == '\n' and i != len(text) - 1:
+            if text[i + 1] == '\n':
+                text_processed += '\n\n'
+            else:
+                text_processed += ' '
+        else:
+            text_processed += text[i]
     
     return text_processed
 
 def ascii2text(text):
     # This program changes the ASCII codes to the corresponding symbol.
-    delete_words_list = []
-    delete_words = re.compile(r'\\x\d{2}')
-    delete_words_list += delete_words.findall(text)
-    delete_words = re.compile(r'\\x\d{1}\w{1}')
-    delete_words_list += delete_words.findall(text)
-    delete_words = re.compile(r'\\x\w{1}\d{1}')
-    delete_words_list += delete_words.findall(text)
-    delete_words = re.compile(r'\\x\w{2}')
-    delete_words_list += delete_words.findall(text)
-    for word in delete_words_list:
-        word_ = word[-2:]
-        text = text.replace(word, chr(int(word_, 16)))      # 将ASCII码转为对应字符
+    delete_words_list = []
+    delete_words = re.compile(r'\\x\d{2}')
+    delete_words_list += delete_words.findall(text)
+    delete_words = re.compile(r'\\x\d{1}\w{1}')
+    delete_words_list += delete_words.findall(text)
+    delete_words = re.compile(r'\\x\w{1}\d{1}')
+    delete_words_list += delete_words.findall(text)
+    delete_words = re.compile(r'\\x\w{2}')
+    delete_words_list += delete_words.findall(text)
+    for word in delete_words_list:
+        word_ = word[-2:]
+        text = text.replace(word, chr(int(word_, 16)))    # 将ASCII码转为对应字符
 
     return text
 
@@ -90,7 +90,7 @@ def words_frequency(inputfile, num):
                     words_count[wordlist[i]] += 1
 
     # 合并词与对应频数
-    print ("2. combining words and the corresponding frequencies...")
+    print ("2. Combining words and the corresponding frequencies...")
     words = []
     counts = []
     for items in words_count:

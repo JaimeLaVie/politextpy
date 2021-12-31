@@ -1,11 +1,13 @@
 # sentiment_analysis.py 情感计算
 # This is an adapted version of Vashishtha and colleague’s work, see: https://github.com/SrishtiVashishtha/Fuzzy-Rule-based-Unsupervised-Sentiment-Analysis-from-Social-Media-Posts.
-# import os
+import os, sys
+sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 import numpy as np
 import skfuzzy as fuzz
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid = SentimentIntensityAnalyzer()
 from . import preprocessing
+# import preprocessing
 decontracted = preprocessing.preprocessing_en().decontracted
 
 # Generate universe variables

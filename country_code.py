@@ -1,13 +1,15 @@
 # -*- coding: UTF-8 -*-
-# country_code.py 将文本中的各种国家的各种称谓统一
+# country_code.py 将文本中的各种国家和地区的各种称谓统一
 
-# 以下国家编码参照ISO 3166-1标准，见https://zh.wikipedia.org/wiki/ISO_3166-1
-# 包含：世界主要国家（联合国常任理事国、G7、G20、OECD国家）+与中国关系密切国家（上合组织成员国（含观察员）、东盟成员国、朝鲜）。
+# 以下国家、地区编码参照ISO 3166-1标准，见https://zh.wikipedia.org/wiki/ISO_3166-1。
+# 包含：世界主要国家（联合国常任理事国、G7、G20、OECD国家）+与中国关系密切国家（上合组织成员国（含观察员）、东盟成员国、朝鲜），此外还添加了欧盟（国际组织）和台湾、香港（地区）。
 
 dictionary = {
-    # 中文国家名词典
+    # 中文国家和地区名词典
     'dictionary_zh': {
         '中国': 'cn', '中國': 'cn', '中华人民共和国': 'cn', '中華人民共和國': 'cn', '中華人民共和国': 'cn',
+        '台湾省': 'tw', '台灣省': 'tw', '臺灣省': 'tw', '台湾': 'tw', '台灣': 'tw', '臺灣': 'tw',
+        '香港特别行政区': 'hk', '香港特別行政區': 'hk', '香港特区': 'hk', '香港特區': 'hk', '香港': 'hk',
         '日本国':'jp', '日本國':'jp', '日本':'jp',             # 包含短名称的长名称在前，优先识别，避免出现"countrynamejp国"的情况
         '韩国': 'kr', '韓國': 'kr', '韓国': 'kr', '大韩民国': 'kr', '大韓民國': 'kr', '大韓民国': 'kr', '南朝鲜': 'kr', '南朝鮮': 'kr', '南韩': 'kr',
         '朝鲜民主主义人民共和国': 'kp', '北朝鲜': 'kp', '朝鲜': 'kp', '朝鮮民主主義人民共和國': 'kp', '北朝鮮': 'kp', '朝鮮': 'kp', '北韩': 'kp',
@@ -73,9 +75,11 @@ dictionary = {
         '澳大利亚联邦': 'au', '澳大利亚': 'au', '澳大利亞': 'au',
         '新西兰王国': 'nz', '新西兰': 'nz', '新西蘭': 'nz'
     },
-    # 英文国家名词典
+    # 英文国家和地区名词典
     'dictionary_en': {
         "People's Republic of China": 'cn', 'China': 'cn', 'the PRC': 'cn', 'P.R.C.': 'cn',#长名称在前优先识别，避免出现"People's Republic of countrynamecn"的情况
+        'Taiwan': 'tw', 'Formosa': 'tw',
+        'Hong Kong Special Administrative Region': 'hk', 'Hong Kong SAR': 'hk', 'Hong Kong S.A.R.': 'hk', 'Hong Kong': 'hk',
         'Japan':'jp',
         'Republic of Korea': 'kr', 'SouthKorea': 'kr', 'South Korea': 'kr', 'R.O. Korea': 'kr', 'R.O.K.': 'kr', 'the ROK': 'kr',
         "Democratic People's Republic of Korea": 'kp', 'NorthKorea': 'kp', 'North Korea': 'kp', 'DPR Korea': 'kp', 'D.P.R. Korea': 'kp', 'D.P.R.K.': 'kp', 'the DPRK': 'kp',
@@ -131,7 +135,7 @@ dictionary = {
         'Russia': 'ru',
         'Belarus': 'by', 
         'EuropeanUnion': 'eu', 'European Union': 'eu', 'the EU': 'eu', 'E.U.': 'eu', ' EU ': 'eu',
-        'UnitedStates': 'us', 'United States': 'us', 'the US': 'us', 'U.S.': 'us', 'USA': 'us', 'American': 'us', # 没有America以避免和北美南美的称呼相混淆。
+        'UnitedStates': 'us', 'United States': 'us', 'the US': 'us', 'U.S.': 'us', 'USA': 'us', # 没有America以避免和北美南美的称呼相混淆。
         'Canada': 'ca', 
         'Mexico': 'mx',
         'Brazil': 'br',
@@ -141,9 +145,11 @@ dictionary = {
         'Australia': 'au', 'Aussie': 'au',
         'NewZealand': 'nz', 'New Zealand': 'nz'
     },
-    # 日语国家名词典 (感谢@shadowless95)
+    # 日语国家和地区名词典 (感谢@shadowless95)
     'dictionary_ja': {
         '中国': 'cn', '中華人民共和国': 'cn',
+        '台湾': 'tw',
+        '香港特別行政区': 'hk', '香港': 'hk', 'ホンコン': 'hk',
         '日本国':'jp', '日本':'jp',
         '韓国': 'kr', '大韓民国': 'kr',
         '朝鮮民主主義人民共和国': 'kp', '北朝鮮': 'kp', '朝鮮': 'kp',
@@ -246,9 +252,11 @@ dictionary = {
         'ニュージーランド': 'nz',
         'パプアニューギニア独立国': 'pg', 'パプアニューギニア': 'pg',
     },
-    # 朝鲜语国家名词典
+    # 朝鲜语国家和地区名词典
     'dictionary_ko': {
         '중국': 'cn', '중화 인민 공화국': 'cn',
+        '대만': 'tw',
+        '홍콩 특별행정구': 'hk', '홍콩': 'hk',
         '일본':'jp',
         '대한민국': 'kr', '한국': 'kr',
         '조선민주주의인민공화국': 'kp', '조선 민주주의 인민 공화국': 'kp', '조선': 'kp', '북한': 'kp', #조선在当代韩国语中表示历史上的“朝鲜时代”，在朝鲜语中表示朝鲜民主主义共和国
@@ -323,7 +331,12 @@ def rename_country(text, lang = 'any'):
         dic = dictionary['dictionary_' + lang]
     for item in dic:
         if item in text:
-            text = text.replace(item, ' countryname' + dic[item] + ' ')  # 前后加空格以免出现countrynamejpese、countrynameusa这种情况
+            if dic[item] == 'eu':
+                text = text.replace(item, ' institution' + dic[item] + ' ')  # 前后加空格以免出现countryjpese、countryusa这种情况
+            elif dic[item] == 'tw' or dic[item] == 'hk':
+                text = text.replace(item, ' region' + dic[item] + ' ')  # 前后加空格以免出现countryjpese、countryusa这种情况
+            else:
+                text = text.replace(item, ' country' + dic[item] + ' ')  # 前后加空格以免出现countryjpese、countryusa这种情况
     
     return text
 
